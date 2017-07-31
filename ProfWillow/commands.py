@@ -180,7 +180,7 @@ async def delete_eggs(client, message, bot_number):
                     'pokemon'] == [] and dicts.users[bot_number][
                         message.author.id]['raids'] is None and
                     dicts.users[bot_number][message.author.id][
-                        'eggs'] == None):
+                        'eggs'] is None):
                     dicts.users[bot_number].pop(message.author.id)
                 update_dicts(len(args.tokens))
                 await client.send_message(message.channel, (
@@ -218,7 +218,7 @@ async def delete_raids(client, message, bot_number):
                     'pokemon'] == [] and dicts.users[bot_number][
                         message.author.id]['raids'] is None and
                     dicts.users[bot_number][message.author.id][
-                        'eggs'] == None):
+                        'eggs'] is None):
                     dicts.users[bot_number].pop(message.author.id)
                 update_dicts(len(args.tokens))
                 await client.send_message(message.channel, (
@@ -257,7 +257,7 @@ async def delete(client, message, bot_number):
                     'pokemon'] == [] and dicts.users[bot_number][
                         message.author.id]['raids'] is None and
                     dicts.users[bot_number][message.author.id][
-                        'eggs'] == None):
+                        'eggs'] is None):
                     dicts.users[bot_number].pop(message.author.id)
                 update_dicts(len(args.tokens))
                 await client.send_message(message.channel, (
@@ -379,7 +379,7 @@ async def subs(client, message, bot_number):
             msg += 'None\n'
         else:
             for area in list(set(args.areas) - set(dicts.users[bot_number][
-                message.author.id]['areas'])):
+                    message.author.id]['areas'])):
                 msg += area.title() + '\n'
     else:
         msg += '\n__ALERT AREA__\n'
@@ -464,12 +464,12 @@ def dex(client, message):
                 except:
                     legacy_moves.append('')
 
-        offensive_grade = soup.find_all(class_=("views-field " +
-            "views-field-field-offensive-moveset-grade"))
+        offensive_grade = soup.find_all(class_=(
+            "views-field views-field-field-offensive-moveset-grade"))
         for index, grade in enumerate(offensive_grade):
             offensive_grade[index] = str(grade.get_text().strip())
-        defensive_grade = soup.find_all(class_=("views-field " +
-            "views-field-field-defensive-moveset-grade"))
+        defensive_grade = soup.find_all(class_=(
+            "views-field views-field-field-defensive-moveset-grade"))
         for index, grade in enumerate(defensive_grade):
             defensive_grade[index] = str(grade.get_text().strip())
 
@@ -543,7 +543,7 @@ def dex(client, message):
                         "field field--name-title field--type-string " +
                         "field--label-hidden"))
             if soup.find(class_=(
-                "secondary-move-legacy secondary-move")) is not None:
+                    "secondary-move-legacy secondary-move")) is not None:
                 charge_legacy = soup.find(class_=(
                     "secondary-move-legacy secondary-move")).find_all(class_=(
                         "field field--name-title field--type-string " +
@@ -561,7 +561,7 @@ def dex(client, message):
             for charge_move in charge_moves:
                 descript += '\n' + charge_move.get_text()
             if soup.find(class_=(
-                "secondary-move-legacy secondary-move")) is not None:
+                    "secondary-move-legacy secondary-move")) is not None:
                 for legacy_move in charge_legacy:
                     descript += '\n' + legacy_move.get_text() + ' (Legacy)'
             descript += "\n```"

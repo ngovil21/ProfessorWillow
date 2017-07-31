@@ -137,7 +137,7 @@ async def rsvp(client, reaction, user, bot_number):
             else:
                 if reaction.emoji == '➡':
                     dm = ("`{}` is on their way to the " +
-                           "raid!\n\n").format(user.display_name)
+                          "raid!\n\n").format(user.display_name)
                 else:
                     dm = "`{}` has arrived at the raid!\n\n".format(
                         user.display_name)
@@ -190,7 +190,7 @@ async def unrsvp(client, reaction, user, bot_number):
             else:
                 if reaction.emoji == '➡':
                     dm = ("`{}` is no longer on their way to the " +
-                           "raid!\n\n").format(user.display_name)
+                          "raid!\n\n").format(user.display_name)
                 else:
                     dm = "`{}` is no longer at the raid!\n\n".format(
                         user.display_name)
