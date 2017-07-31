@@ -17,6 +17,8 @@ For support, join this Discord server: https://discord.gg/NkcAmM5
 2. `cd ./ProfessorWillow`
 3. `python3 -m pip install -r requirements.txt`
 
+![](http://i.imgur.com/DQEYZ.png)
+
 **How to set up (always use Notepad++ and never notepad!):**
 
 1. Rename `config.ini.example` to `config.ini` in the config folder.
@@ -27,8 +29,6 @@ For support, join this Discord server: https://discord.gg/NkcAmM5
 
 **TODO**
 
-1. Finish README
-2. `%commands`
-3. fix msg error
-4. test
-5. deploy to VPS
+1. fix msg error
+2. test
+3. deploy to VPS

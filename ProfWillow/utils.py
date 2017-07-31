@@ -156,28 +156,43 @@ def truncate(msg):
 def info_msg(feed_channels):
         info_msg = "Hello there! I am Professor Willow. \n"
         if feed_channels is True:
-            info_msg += ("`%add [team]` to get notifications when a given " +
-                         "team takes a gym, \n" +
-                         "`%add [team] [area]` to  get notifications when a " +
-                         "given team takes a gym in a given area, \n" +
-                         "`%delete [team]` or `%remove [team]` to delete " +
-                         "notifications for a given team, \n" +
-                         "`%delete [team] [area]` or `%remove [team] " +
-                         "[area]` to delete notifications for a given team " +
-                         "in a given area, \n" +
-                         "`%pause` or `%p` to pause all notifications, \n" +
-                         "`%resume` or `%r` to resume all notifications, \n" +
-                         "`%[team]` to receive a direct message showing " +
-                         "current team level notification settings, \n")
-        info_msg += ("`%dex [pokemon]` to get pokemon information, \n" +
-                     "`%status` to see which bots are currently online, \n" +
-                     "`%donate` to see donation information for this project.")
-        if feed_channels is True:
-            info_msg += ("\n" +
-                         "It is possible to add or delete multiple areas by " +
-                         "putting areas on seperate lines or separating " +
-                         "them with commas. \n" +
-                         "Team names are not case-sensitve, commands should " +
-                         "be in the gym_subscription_channel.")
+            info_msg += ("`%add eggs [level]` to get notifications when an " +
+                         "given level egg appears at the top of a gym,\n" +
+                         "`%add raids [level]` to get notifications when an " +
+                         "give level of pokemon takes over a gym,\n" +
+                         "`%add [pokemon]` to notifications when a given " +
+                         "pokemon takes over a gym,\n" +
+                         "`%delete eggs [level]` or `%remove eggs [level]` " +
+                         "to delete notifications for below a given egg " +
+                         "level,\n" +
+                         "`%delete raids [level]` or `%remove raids " +
+                         "[level]` to delete notifications for below a " +
+                         "given raid level,\n" +
+                         "`%delete [pokemon]` or `%remove [pokemon]` to " +
+                         "delete notifications for a given raid pokemon,\n" +
+                         "`%pause` or `%p` to pause all notifcations,\n" +
+                         "`%pause [area/all]` to pause a given area or all " +
+                         "all areas,\n" +
+                         "`%resume` or `%r` to resume all notifications,\n" +
+                         "`%resume [area/all]` to resume a given area or " +
+                         "all areas,\n" +
+                         "`%subs` to see your notication settings,\n" +
+                         "`%dex [pokemon]` to get pokemon information,\n" +
+                         "`%status` to see which bots are currently " +
+                         "online,\n" +
+                         "`%donate` to see donation information for this " +
+                         "project.\n" +
+                         "It is possible to add or delete multiple pokemon " +
+                         "by putting pokemon on seperate lines or " +
+                         "separating them with commas.\n" +
+                         "Commands should be in the " +
+                         "raid_subscription_channel.\n\n" +
+                         "To rsvp for a raid:\n" +
+                         "Add the :arrow_right: reaction to a raid post in " +
+                         "the #raid_feed to tell everyone you are on your " +
+                         "way.\n" +
+                         "Add the :white_check_mark: reaction to a raid " +
+                         "post in the #raid_feed to tell everyone you have " +
+                         "arrived at the raid.")
 
         return info_msg
