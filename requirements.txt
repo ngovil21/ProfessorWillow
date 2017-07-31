@@ -1,0 +1,6 @@
+asyncio
+discord.py
+configargparse
+requests
+beautifulsoup4
+aiohttp

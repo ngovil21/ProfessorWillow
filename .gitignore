@@ -1,0 +1,7 @@
+*.pyc
+config/*
+!config/config.ini.example
+dicts/*
+!dicts/users.json.example
+ProfWillow/__pycache__
+null
