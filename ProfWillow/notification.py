@@ -16,11 +16,12 @@ dicts = Dicts()
 async def send_dm(client, user, msg=None, emb=None, count=1):
     try:
         await client.send_message(discord.utils.find(
-            lambda u: u.id == user, client.get_all_members()), embed=emb)
+            lambda u: u.id == user, client.get_all_members()), msg,
+                                  embed=emb)
     except Exception as e:
         if count < 3:
             await asyncio.sleep(5)
-            send_dm(client, user, emb, count + 1)
+            send_dm(client, user, msg=msg, emb=emb, count=count + 1)
         else:
             log.error(('Faild to send: {} gym to {} due to Discord rate ' +
                       'limits or the end-user blocking the bot').format(

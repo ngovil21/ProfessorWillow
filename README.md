@@ -25,10 +25,3 @@ For support, join this Discord server: https://discord.gg/NkcAmM5
 2. Set the `tokens`, `bot_client_ids`, and `feed_channels` and any other optional variables in the config file.
 3. `python3 start_willow.py`
 4. `%commands` if you need a list of commands.
-
-
-**TODO**
-
-1. fix msg error
-2. test
-3. deploy to VPS
