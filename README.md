@@ -17,7 +17,7 @@ For support, join this Discord server: https://discord.gg/NkcAmM5
 2. `cd ./ProfessorWillow`
 3. `python3 -m pip install -r requirements.txt`
 
-![](http://i.imgur.com/DQEYZ.png)
+![](http://i.imgur.com/ScCyoXb.png)
 
 **How to set up (always use Notepad++ and never notepad!):**
 
