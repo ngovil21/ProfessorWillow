@@ -3,6 +3,7 @@
 
 import logging
 import discord
+import asyncio
 import re
 from .utils import get_args, Dicts
 
@@ -59,14 +60,15 @@ async def notification(client, message, bot_number):
                 'description'].lower())
         except:
             log.error('PokeAlarm embed does not have a recognized area or ' +
-                'geofence in the description')
+                      'geofence in the description')
     for user in dicts.users[bot_number]:
         if (dicts.users[bot_number][user]['paused'] is False and
             (args.areas == [] or
              area in dicts.users[bot_number][user]['areas']) and
             (pokemon in dicts.users[bot_number][user]['pokemon'] or
              (egg is True and lvl >= dicts.users[bot_number][user]['eggs']) or
-             (egg is False and lvl >= dicts.users[bot_number][user]['raids']))):                                
+             (egg is False and lvl >= dicts.users[bot_number][user][
+                 'raids']))):
             if made is False:
                 try:
                     col = msg['color']
@@ -82,6 +84,7 @@ async def notification(client, message, bot_number):
                 made = True
             await send_dm(client, user, emb=em)
 
+
 async def rsvp(client, reaction, user, bot_number):
     msg = reaction.message.embeds[0]
     omw = []
@@ -95,8 +98,8 @@ async def rsvp(client, reaction, user, bot_number):
                 here.append(user_)
     if reaction.emoji == '➡' and user in here:
         await client.remove_reaction(reaction.message, reaction.emoji, user)
-        await self.send_message(discord.utils.find(
-            lambda u: u.id == after.id,client.get_all_members()),
+        await client.send_message(discord.utils.find(
+            lambda u: u.id == user.id, client.get_all_members()),
             "That doesn't make any sense `{}`, you said you were already " +
             "at teh raid but now you are on your way?  If you are not " +
             "actually not at the raid, please remove your first reaction " +
@@ -140,6 +143,7 @@ async def rsvp(client, reaction, user, bot_number):
                         user.display_name)
             await send_dm(client, user_.id, msg=dm, emb=em)
 
+
 async def unrsvp(client, reaction, user, bot_number):
     msg = reaction.message.embeds[0]
     omw = []
@@ -177,7 +181,7 @@ async def unrsvp(client, reaction, user, bot_number):
             em.set_image(url=msg['image']['url'])
         except:
             pass
-        for user_ in list(set(omw+ here)):
+        for user_ in list(set(omw + here)):
             if user_ == user:
                 if reaction.emoji == '➡':
                     dm = "You are no longer on you way to a raid!\n\n"

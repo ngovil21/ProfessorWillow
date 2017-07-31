@@ -5,7 +5,6 @@ import logging
 import asyncio
 import discord
 import requests
-import json
 from bs4 import BeautifulSoup
 from .utils import get_args, Dicts, update_dicts, truncate, info_msg
 
@@ -81,10 +80,11 @@ async def add_raids(client, message, bot_number):
     try:
         if int(msg) <= 5:
             if message.author.id not in dicts.users[bot_number]:
-                dicts.users[bot_number][message.author.id] = {'pokemon': [],
-                                                              'raids': int(msg),
-                                                              'eggs': None,
-                                                              'paused': False}
+                dicts.users[bot_number][message.author.id] = {
+                    'pokemon': [],
+                    'raids': int(msg),
+                    'eggs': None,
+                    'paused': False}
                 if args.all_areas is True:
                     dicts.users[bot_number][message.author.id][
                         'areas'] = args.areas
@@ -127,10 +127,11 @@ async def add(client, message, bot_number):
     for cmd in msg:
         if cmd in dicts.pokemon:
             if message.author.id not in dicts.users[bot_number]:
-                dicts.users[bot_number][message.author.id] = {'pokemon': [cmd],
-                                                              'raids': None,
-                                                              'eggs': None,
-                                                              'paused': False}
+                dicts.users[bot_number][message.author.id] = {
+                    'pokemon': [cmd],
+                    'raids': None,
+                    'eggs': None,
+                    'paused': False}
                 if args.all_areas is True:
                     dicts.users[bot_number][message.author.id][
                         'areas'] = args.areas
@@ -155,7 +156,7 @@ async def add(client, message, bot_number):
         else:
             await client.send_message(message.channel, (
                 "That's not any pokemon that I know of, check your spelling " +
-                "and try again `{}`.").format(message.author.display_name))            
+                "and try again `{}`.").format(message.author.display_name))
 
 
 async def delete_eggs(client, message, bot_number):
@@ -177,7 +178,7 @@ async def delete_eggs(client, message, bot_number):
                     dicts.users[bot_number][message.author.id]['eggs'] = None
                 if (dicts.users[bot_number][message.author.id][
                     'pokemon'] == [] and dicts.users[bot_number][
-                        message.author.id]['raids'] == None and
+                        message.author.id]['raids'] is None and
                     dicts.users[bot_number][message.author.id][
                         'eggs'] == None):
                     dicts.users[bot_number].pop(message.author.id)
@@ -215,7 +216,7 @@ async def delete_raids(client, message, bot_number):
                     dicts.users[bot_number][message.author.id]['eggs'] = None
                 if (dicts.users[bot_number][message.author.id][
                     'pokemon'] == [] and dicts.users[bot_number][
-                        message.author.id]['raids'] == None and
+                        message.author.id]['raids'] is None and
                     dicts.users[bot_number][message.author.id][
                         'eggs'] == None):
                     dicts.users[bot_number].pop(message.author.id)
@@ -231,9 +232,9 @@ async def delete_raids(client, message, bot_number):
     except:
         await client.send_message(message.channel, (
             'Egg level must be an integer, try again `{}`.').format(
-                message.author.display_name)) 
+                message.author.display_name))
 
-    
+
 async def delete(client, message, bot_number):
     msg = message.content.lower().replace('%delete ', '').replace(
         '%delete\n', '').replace('%remove ', '').replace(
@@ -254,7 +255,7 @@ async def delete(client, message, bot_number):
                     'pokemon'].remove(cmd)
                 if (dicts.users[bot_number][message.author.id][
                     'pokemon'] == [] and dicts.users[bot_number][
-                        message.author.id]['raids'] == None and
+                        message.author.id]['raids'] is None and
                     dicts.users[bot_number][message.author.id][
                         'eggs'] == None):
                     dicts.users[bot_number].pop(message.author.id)
@@ -266,7 +267,7 @@ async def delete(client, message, bot_number):
         else:
             await client.send_message(message.channel, (
                 "That's not any pokemon that I know of, check your spelling " +
-                "and try again `{}`.").format(message.author.display_name)) 
+                "and try again `{}`.").format(message.author.display_name))
 
 
 async def pause(client, message, bot_number):
@@ -284,7 +285,7 @@ async def pause(client, message, bot_number):
         await client.send_message(message.channel, (
             'Your alerts have been paused, `{}`.').format(
                 message.author.display_name))
-                                                    
+
 
 async def pause_area(client, message, bot_number):
     if message.content.lower() == '%pause all':
@@ -374,7 +375,7 @@ async def subs(client, message, bot_number):
     if args.all_areas is True:
         msg += '\n__PAUSED AREAS__\n'
         if len(args.areas) == len(dicts.users[bot_number][message.author.id][
-            'areas']):
+                'areas']):
             msg += 'None\n'
         else:
             for area in list(set(args.areas) - set(dicts.users[bot_number][
@@ -420,7 +421,7 @@ def dex(client, message):
                                       "field--label-hidden field__items"))
         female = soup.find_all(class_="female-percentage")
         male = soup.find_all(class_="male-percentage")
-        
+
         quick = []
         legacy_quick = []
         for quick_move in soup.find_all(class_=(
@@ -522,7 +523,7 @@ def dex(client, message):
             descript += "\n```"
 
             if len(soup.find_all(class_=("raid-boss-counters"))) > 0:
-                
+
                 descript += "\nRaid Boss Counters:\n```"
                 for counter in raid_counters:
                     descript += '\n' + counter.get_text()

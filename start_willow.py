@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import sys
 from ProfWillow.utils import get_args, get_dicts
 from ProfWillow.clients import start_clients
 
@@ -36,7 +35,7 @@ def start_bots():
         log.info("Muted role set to {}".format(args.muted_role))
     else:
         log.info("No muted role set")
-    if args.all_areas == True:
+    if args.all_areas is True:
         log.info("All users will automatically be added to all areas")
     else:
         log.info("All users will automatically be added to no areas")

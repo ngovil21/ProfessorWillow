@@ -5,11 +5,10 @@ import logging
 import discord
 import asyncio
 from .utils import get_args, Dicts, update_dicts
-from .notification import notification, rsvp
+from .notification import notification, rsvp, unrsvp
 from .commands import (status, add_eggs, add_raids, add, delete_eggs,
                        delete_raids, delete, pause, pause_area, resume,
-                       resume_area, commands, dex, delete,
-                       subs, resume, donate)
+                       resume_area, subs, commands, dex, donate)
 
 log = logging.getLogger('Bot')
 
@@ -82,7 +81,7 @@ class Bot(discord.Client):
               (reaction.emoji != '➡' and reaction.emoji != '✅')):
             await self.remove_reaction(reaction.message, reaction.emoji, user)
             await self.send_message(discord.utils.find(
-                lambda u: u.id == after.id, self.get_all_members()),
+                lambda u: u.id == user.id, self.get_all_members()),
                 'That is an unrecogized reaction, `{}`.'.format(
                     user.display_name))
 
@@ -106,30 +105,30 @@ class Bot(discord.Client):
                     '%add egg' == message.content[0:8].lower()):
                 await add_eggs(self, message, bot_number)
             elif ((message.channel.id == args.subscription_channel or
-                 message.channel.id == args.test_channel) and
-                    '%add raid' == message.content[0:9].lower()):
+                   message.channel.id == args.test_channel) and
+                  '%add raid' == message.content[0:9].lower()):
                 await add_raids(self, message, bot_number)
             elif ((message.channel.id == args.subscription_channel or
-                 message.channel.id == args.test_channel) and
-                    '%add ' == message.content[0:5].lower()):
+                   message.channel.id == args.test_channel) and
+                  '%add ' == message.content[0:5].lower()):
                 await add(self, message, bot_number)
             elif ((message.channel.id == args.subscription_channel or
-                 message.channel.id == args.test_channel) and
-                    ('%delete egg' == message.content[0:11].lower() or
-                     '%remove egg' == message.content[0:11].lower() or
-                     '%gtfo egg' == message.content[0:9].lower())):
+                   message.channel.id == args.test_channel) and
+                  ('%delete egg' == message.content[0:11].lower() or
+                   '%remove egg' == message.content[0:11].lower() or
+                   '%gtfo egg' == message.content[0:9].lower())):
                 await delete_eggs(self, message, bot_number)
             elif ((message.channel.id == args.subscription_channel or
-                 message.channel.id == args.test_channel) and
-                    ('%delete raid' == message.content[0:12].lower() or
-                     '%remove raid' == message.content[0:12].lower() or
-                     '%gtfo raid' == message.content[0:10].lower())):
+                   message.channel.id == args.test_channel) and
+                  ('%delete raid' == message.content[0:12].lower() or
+                   '%remove raid' == message.content[0:12].lower() or
+                   '%gtfo raid' == message.content[0:10].lower())):
                 await delete_raids(self, message, bot_number)
             elif ((message.channel.id == args.subscription_channel or
-                 message.channel.id == args.test_channel) and
-                    ('%delete ' == message.content[0:8].lower() or
-                     '%remove ' == message.content[0:8].lower() or
-                     '%gtfo ' == message.content[0:6].lower())):
+                   message.channel.id == args.test_channel) and
+                  ('%delete ' == message.content[0:8].lower() or
+                   '%remove ' == message.content[0:8].lower() or
+                   '%gtfo ' == message.content[0:6].lower())):
                 await delete(self, message, bot_number)
             elif (message.channel.is_private is False and
                   ('%pause' == message.content.lower() or

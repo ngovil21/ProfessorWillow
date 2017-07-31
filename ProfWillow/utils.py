@@ -3,13 +3,9 @@
 
 import logging
 import configargparse
-import discord
 import os
 import sys
 import json
-import re
-import bisect
-import random
 
 log = logging.getLogger('utils')
 
@@ -155,7 +151,7 @@ def truncate(msg):
     msg_split1 = msg[:len(msg[:1999].rsplit('\n', 1)[0])]
     msg_split2 = msg[len(msg[:1999].rsplit('\n', 1)[0]):]
     return [msg_split1, msg_split2]
-    
+
 
 def info_msg(feed_channels):
         info_msg = "Hello there! I am Professor Willow. \n"
