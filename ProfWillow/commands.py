@@ -73,7 +73,7 @@ async def add_eggs(client, message, bot_number):
         await client.send_message(message.channel, (
             'Egg level must be an integer, try again `{}`.').format(
                 message.author.display_name))
-    if len(dicst.users[bot_number]) > 100:
+    if len(dicts.users[bot_number]) > 100:
         log.warning("More than 100 users per bot, consider adding more bots")
 
 
@@ -119,7 +119,7 @@ async def add_raids(client, message, bot_number):
         await client.send_message(message.channel, (
             'Raid level must be an integer, try again `{}`.').format(
                 message.author.display_name))
-    if len(dicst.users[bot_number]) > 100:
+    if len(dicts.users[bot_number]) > 100:
         log.warning("More than 100 users per bot, consider adding more bots")
 
 
@@ -161,7 +161,7 @@ async def add(client, message, bot_number):
             await client.send_message(message.channel, (
                 "That's not any pokemon that I know of, check your spelling " +
                 "and try again `{}`.").format(message.author.display_name))
-    if len(dicst.users[bot_number]) > 100:
+    if len(dicts.users[bot_number]) > 100:
         log.warning("More than 100 users per bot, consider adding more bots")
 
 
