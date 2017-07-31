@@ -9,13 +9,26 @@ For support, join this Discord server: https://discord.gg/NkcAmM5
 **Requirements:**
 
 1. Python3
-....
+2. At least one Discord bot.  Here is a link on how to set it up: https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token
+
+**How to install (for Windows):**
+
+1. `git clone https://github.com/tallypokemap/ProfessorWillow.git`
+2. `cd ./ProfessorWillow`
+3. `python3 -m pip install -r requirements.txt`
+
+**How to set up (always use Notepad++ and never notepad!):**
+
+1. Rename `config.ini.example` to `config.ini` in the config folder.
+2. Set the `token`, `mod_logs`, and `expires` variables in the config file.
+3. `python3 start_willow.py`
+4. `%commands` if you need a list of commands.
+
 
 **TODO**
 
 1. Finish README
 2. `%commands`
-3. correct example config
-4. fix msg error
-5. test
-6. deploy to VPS
+3. fix msg error
+4. test
+5. deploy to VPS

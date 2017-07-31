@@ -1,9 +1,8 @@
 #tokens:					##List of tokens for Discord bots
+#bot_client_ids:			##List of client IDs for Discord Bots
 #feed_channels:				##Channel ID that PokeAlarm posts to
 #subscription_channel:		##Channel ID that users input subscription commands
-#scoreboard_channel:		##Channel ID that you want Professor Willow to post the scoreboard to
 #test_channel:				##Channel ID that you would like to do testing in
 #muted_role:				##Role name for muted users
 #areas:						##List or areas or geofences
-#host:						##Host for RocketMap scoreboard webhook
-#port:						##Port for RocketMap scoreboard webhook
+#all_areas:					##Default to sub to all areas (default=False)
