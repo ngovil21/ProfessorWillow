@@ -20,7 +20,7 @@ For support, join this Discord server: https://discord.gg/NkcAmM5
 **How to set up (always use Notepad++ and never notepad!):**
 
 1. Rename `config.ini.example` to `config.ini` in the config folder.
-2. Set the `token`, `mod_logs`, and `expires` variables in the config file.
+2. Set the `tokens`, `bot_client_ids`, and `feed_channels` and any other optional variables in the config file.
 3. `python3 start_willow.py`
 4. `%commands` if you need a list of commands.
 
