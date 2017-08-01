@@ -217,9 +217,9 @@ async def delete_raids(client, message, bot_number):
                         message.author.display_name, msg))
             else:
                 dicts.users[bot_number][message.author.id][
-                    'eggs'] = int(msg) + 1
-                if dicts.users[bot_number][message.author.id]['eggs'] == 6:
-                    dicts.users[bot_number][message.author.id]['eggs'] = None
+                    'raids'] = int(msg) + 1
+                if dicts.users[bot_number][message.author.id]['raids'] == 6:
+                    dicts.users[bot_number][message.author.id]['raids'] = None
                 if (dicts.users[bot_number][message.author.id][
                     'pokemon'] == [] and dicts.users[bot_number][
                         message.author.id]['raids'] is None and
@@ -374,40 +374,48 @@ async def resume_area(client, message, bot_number):
 
 async def subs(client, message, bot_number):
     msg = message.author.display_name + "'s Raid Notification Settings:\n"
-    if dicts.users[bot_number][message.author.id]['paused'] is True:
-        msg += '\nPAUSE MODE: ON\n'
-    else:
-        msg += '\nPAUSE MODE: OFF\n'
-    if args.all_areas is True:
-        msg += '\n__PAUSED AREAS__\n'
-        if len(args.areas) == len(dicts.users[bot_number][message.author.id][
-                'areas']):
-            msg += 'None\n'
+    if message.author.id in dicts.users[bot_number]:
+        if dicts.users[bot_number][message.author.id]['paused'] is True:
+            msg += '\nPAUSE MODE: ON\n'
         else:
-            for area in list(set(args.areas) - set(dicts.users[bot_number][
-                    message.author.id]['areas'])):
+            msg += '\nPAUSE MODE: OFF\n'
+        if args.all_areas is True:
+            msg += '\n__PAUSED AREAS__\n'
+            if len(args.areas) == len(dicts.users[bot_number][
+                message.author.id][
+                    'areas']):
+                msg += 'None\n'
+            else:
+                for area in list(set(args.areas) - set(dicts.users[bot_number][
+                        message.author.id]['areas'])):
+                    msg += area.title() + '\n'
+        else:
+            msg += '\n__ALERT AREA__\n'
+            for area in dicts.users[message.author.id]['areas']:
                 msg += area.title() + '\n'
+        msg += '\nEGG ALERT LEVEL: ' + str(dicts.users[bot_number][
+            message.author.id]['eggs']) + '+'
+        msg += '\nRAID ALERT LEVEL: ' + str(dicts.users[bot_number][
+            message.author.id]['raids']) + '+\n'
+        msg += '\n__RAID ALERTS__\n'
+        if dicts.users[bot_number][message.author.id]['pokemon'] == []:
+            msg += 'None'
+        else:
+            for pokemon in dicts.users[bot_number][message.author.id][
+                'pokemon']:
+                msg += pokemon + '\n'
+        msg = [msg]
+        while len(msg[-1]) > 2000:
+            for msg_split in truncate(msg.pop()):
+                msg.append(msg_split)
+        for dm in msg:
+            await client.send_message(discord.utils.find(
+                lambda u: u.id == message.author.id, client.get_all_members()),
+                                      dm)
     else:
-        msg += '\n__ALERT AREA__\n'
-        for area in dicts.users[message.author.id]['areas']:
-            msg += area.title() + '\n'
-    msg += '\nEGG ALERT LEVEL: ' + str(dicts.users[bot_number][
-        message.author.id]['eggs']) + '+'
-    msg += '\nRAID ALERT LEVEL: ' + str(dicts.users[bot_number][
-        message.author.id]['raids']) + '+\n'
-    msg += '\n__RAID ALERTS__\n'
-    if dicts.users[bot_number][message.author.id]['pokemon'] == []:
-        msg += 'None'
-    else:
-        for pokemon in dicts.users[bot_number][message.author.id]['pokemon']:
-            msg += pokemon + '\n'
-    msg = [msg]
-    while len(msg[-1]) > 2000:
-        for msg_split in truncate(msg.pop()):
-            msg.append(msg_split)
-    for dm in msg:
         await client.send_message(discord.utils.find(
-            lambda u: u.id == message.author.id, client.get_all_members()), dm)
+            lambda u: u.id == message.author.id, client.get_all_members()),
+                                  "You haven't set any subscriptions!")
 
 
 def dex(client, message):
