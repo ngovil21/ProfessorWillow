@@ -532,6 +532,7 @@ def dex(client, message):
 
                 descript += "\nRaid Boss Counters:\n```"
                 for counter in raid_counters:
+
                     descript += '\n' + counter.get_text()
                 descript += "\n```"
 
@@ -571,6 +572,14 @@ def dex(client, message):
                 for legacy_move in charge_legacy:
                     descript += '\n' + legacy_move.get_text() + ' (Legacy)'
             descript += "\n```"
+
+            if len(soup.find_all(class_=("raid-boss-counters"))) > 0:
+
+                descript += "\nRaid Boss Counters:\n```"
+                for counter in raid_counters:
+
+                    descript += '\n' + counter.get_text()
+                descript += "\n```"
 
         em = discord.Embed(title=title, url=site, description=descript,
                            color=dicts.type_col[

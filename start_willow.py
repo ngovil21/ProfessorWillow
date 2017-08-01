@@ -10,6 +10,7 @@ logging.basicConfig(format='[%(name)10.10s][%(levelname)8.8s] %(message)s',
 log = logging.getLogger('server')
 logging.getLogger("discord").setLevel(logging.ERROR)
 logging.getLogger("websockets").setLevel(logging.ERROR)
+logging.getLogger("requests").setLevel(logging.ERROR)
 
 args = get_args()
 
