@@ -416,6 +416,7 @@ async def subs(client, message, bot_number):
         await client.send_message(discord.utils.find(
             lambda u: u.id == message.author.id, client.get_all_members()),
                                   "You haven't set any subscriptions!")
+    await client.delete_message(message)
 
 
 def dex(client, message):

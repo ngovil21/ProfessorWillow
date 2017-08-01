@@ -67,9 +67,11 @@ async def notification(client, message, bot_number):
             (args.areas == [] or
              area in dicts.users[bot_number][user]['areas']) and
             (pokemon in dicts.users[bot_number][user]['pokemon'] or
-             (egg is True and lvl >= dicts.users[bot_number][user]['eggs']) or
-             (egg is False and lvl >= dicts.users[bot_number][user][
-                 'raids']))):
+             (dicts.users[bot_number][user]['eggs'] is not None and
+              egg is True and lvl >= dicts.users[bot_number][user]['eggs']) or
+             (dicts.users[bot_number][user]['raids'] is not None and
+              egg is False and lvl >= dicts.users[bot_number][user][
+                  'raids']))):
             if made is False:
                 try:
                     col = msg['color']

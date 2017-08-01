@@ -54,5 +54,5 @@ def start_bots():
 
 
 if __name__ == '__main__':
-    log.info("GymBot is getting ready...")
+    log.info("ProfessowWillow is getting ready...")
     start_bots()
