@@ -172,7 +172,7 @@ def info_msg(feed_channels):
                          "delete notifications for a given raid pokemon,\n" +
                          "`%pause` or `%p` to pause all notifcations,\n" +
                          "`%pause [area/all]` to pause a given area or all " +
-                         "all areas,\n" +
+                         "areas,\n" +
                          "`%resume` or `%r` to resume all notifications,\n" +
                          "`%resume [area/all]` to resume a given area or " +
                          "all areas,\n" +
