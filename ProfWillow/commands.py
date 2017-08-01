@@ -402,7 +402,7 @@ async def subs(client, message, bot_number):
             msg += 'None'
         else:
             for pokemon in dicts.users[bot_number][message.author.id][
-                'pokemon']:
+                    'pokemon']:
                 msg += pokemon + '\n'
         msg = [msg]
         while len(msg[-1]) > 2000:
