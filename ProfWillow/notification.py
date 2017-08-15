@@ -5,7 +5,6 @@ import logging
 import discord
 import asyncio
 import re
-from datetime import datetime
 from .utils import get_args, Dicts
 
 log = logging.getLogger('notification')
@@ -30,8 +29,7 @@ async def send_msgs(client, bot_number):
                                'end-user blocking the bot').format(
                           discord.utils.find(
                               lambda u: u.id == obj[0],
-                              client.get_all_members()).display_name),
-                              e.__class__.__name__, e)
+                              client.get_all_members()).display_name))
                     continue
             elif isinstance(obj, discord.message.Message):
                 msg = obj
@@ -49,6 +47,7 @@ async def send_msgs(client, bot_number):
                 log.warning(("Queue size for bot number {} is > 50, " +
                              "consider adding more bots").format(
                                  bot_number + 1))
+
 
 async def notification(client, message, bot_number):
     msg = message.embeds[0]

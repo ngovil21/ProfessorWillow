@@ -42,11 +42,6 @@ def start_bots():
         log.info("All users will automatically be added to no areas")
     log.info("Setting up dictionaries")
     dicts = get_dicts(len(args.tokens))
-    for bot_dict in dicts.users:
-        if len(bot_dict) > 100:
-            log.warning(
-                "More than 100 users per bot, consider adding more bots")
-            break
     log.info("Starting Clients")
     start_clients()
 
