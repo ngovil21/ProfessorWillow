@@ -86,7 +86,7 @@ class Bot(discord.Client):
     async def on_message(self, message):
         bot_number = args.bot_client_ids.index(self.user.id)
         if (message.channel.id in args.feed_channels and
-            message.content == ''):
+                message.content == ''):
             await notification(self, message, bot_number)
         if (message.embeds and 'egg' not in message.embeds[0]['title'] and
             (((message.channel.id in args.feed_channels or
@@ -131,7 +131,7 @@ class Bot(discord.Client):
                     await resume_area(self, message, bot_number)
             if not message.channel.is_private:
                 if ('%pause' == message.content.lower() or
-                    '%p' == message.content.lower()):
+                        '%p' == message.content.lower()):
                     await pause(self, message, bot_number)
                 elif ('%resume' == message.content.lower() or
                       '%r' == message.content.lower()):
@@ -139,7 +139,7 @@ class Bot(discord.Client):
                 elif '%dex ' == message.content[0:5].lower():
                     await dex(self, message)
             if ('%commands' == message.content.lower() or
-                  '%help' == message.content.lower()):
+                    '%help' == message.content.lower()):
                 await commands(self, message)
             elif '%donate' == message.content.lower():
                 await donate(self, message)
