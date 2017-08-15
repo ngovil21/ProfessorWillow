@@ -98,7 +98,10 @@ class Bot(discord.Client):
             await self.add_reaction(message, '❌')
             if message.channel.id == args.active_raids_channel:
                 await asyncio.sleep(7200)
-                await self.delete_message(message)
+                try:
+                    await self.delete_message(message)
+                except:
+                    pass
         elif ('%status' == message.content.lower() and
                 not message.channel.is_private):
             await status(self, message, bot_number + 1)
