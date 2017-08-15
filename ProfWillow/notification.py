@@ -25,7 +25,8 @@ async def send_dm(client, user, msg=None, emb=None, count=1):
         else:
             log.error(('Faild to send: To {} due to Discord rate ' +
                       'limits or the end-user blocking the bot').format(
-                          discord.utils.find(lambda u: u.id == user,
+                          discord.utils.find(
+                              lambda u: u.id == user,
                               client.get_all_members()).display_name),
                       e.__class__.__name__, e)
 
@@ -125,8 +126,7 @@ async def rsvp(client, reaction, user, bot_number):
         if user.name in omw:
             await client.send_message(discord.utils.find(
                 lambda u: u.id == user.id, client.get_all_members()),
-                                      ("You already said you were on your " +
-                                       "way to this raid."))
+                    ("You already said you were on your way to this raid."))
         elif user.name in here:
             await client.send_message(discord.utils.find(
                 lambda u: u.id == user.id, client.get_all_members()),
