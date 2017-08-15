@@ -6,7 +6,6 @@ import configargparse
 import os
 import sys
 import json
-from datetime import datetime
 
 log = logging.getLogger('utils')
 

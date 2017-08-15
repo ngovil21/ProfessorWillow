@@ -31,7 +31,7 @@ async def send_msgs(client, bot_number):
                           discord.utils.find(
                               lambda u: u.id == obj[0],
                               client.get_all_members()).display_name),
-                      e.__class__.__name__, e)
+                              e.__class__.__name__, e)
                     continue
             elif isinstance(obj, discord.message.Message):
                 msg = obj
@@ -48,7 +48,7 @@ async def send_msgs(client, bot_number):
             if len(dicts.msgs[bot_number]) > 50:
                 log.warning(("Queue size for bot number {} is > 50, " +
                              "consider adding more bots").format(
-                                 bot_number + 1)
+                                 bot_number + 1))
 
 async def notification(client, message, bot_number):
     msg = message.embeds[0]

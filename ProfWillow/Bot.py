@@ -78,7 +78,7 @@ class Bot(discord.Client):
              (reaction.message.channel.is_private and
               reaction.message.author == self.user)) and
             reaction.message.embeds and user.id not in args.bot_client_ids and
-            'egg' not in reaction.message.embeds[0]['title']):
+                'egg' not in reaction.message.embeds[0]['title']):
             if reaction.message.channel.is_private is False:
                 await self.remove_reaction(
                     reaction.message, reaction.emoji, user)
