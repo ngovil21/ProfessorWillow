@@ -88,7 +88,8 @@ class Bot(discord.Client):
         if (message.channel.id in args.feed_channels and
                 message.content == ''):
             await notification(self, message, bot_number)
-        if (message.embeds and 'egg' not in message.embeds[0]['title'] and
+        if (int(message.id) % int(len(args.tokens)) == bot_number) and
+            message.embeds and 'egg' not in message.embeds[0]['title'] and
             (((message.channel.id in args.feed_channels or
                message.channel.id == args.active_raids_channel)
               and bot_number == 0) or
