@@ -124,8 +124,9 @@ async def rsvp(client, reaction, user, bot_number):
     if reaction.emoji == '➡':
         if user.name in omw:
             await client.send_message(discord.utils.find(
-                lambda u: u.id == user.id, client.get_all_members()), (
-                    "You already said you were on your way to this raid."))
+                lambda u: u.id == user.id, client.get_all_members()),
+                                      ("You already said you were on your " +
+                                       "way to this raid."))
         elif user.name in here:
             await client.send_message(discord.utils.find(
                 lambda u: u.id == user.id, client.get_all_members()),
