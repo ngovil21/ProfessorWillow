@@ -62,7 +62,7 @@ async def notification(client, message, bot_number):
         except:
             log.error('PokeAlarm embed does not have a recognized area or ' +
                       'geofence in the description')
-    for user in dicts.users[bot_number]:
+    for user in list(dicts.users[bot_number]):
         if (dicts.users[bot_number][user]['paused'] is False and
             (args.areas == [] or
              area in dicts.users[bot_number][user]['areas']) and
