@@ -36,6 +36,9 @@ def get_args():
     parser.add_argument('-sub', '--subscription_channel', type=str,
                         help=('Channel ID that users input subscription ' +
                               'commands'))
+    parser.add_argument('-arc', '--active_raids_channel', type=str,
+                        help='Channel ID to post active raids in',
+                        required=True)
     parser.add_argument('-test', '--test_channel', type=str,
                         help='Channel ID that you would like to do testing in')
     parser.add_argument('-area', '--areas', type=str.lower, action='append',
@@ -188,11 +191,13 @@ def info_msg(feed_channels):
                          "Commands should be in the " +
                          "raid_subscription_channel.\n\n" +
                          "To rsvp for a raid:\n" +
-                         "Add the :arrow_right: reaction to a raid post in " +
-                         "the #raid_feed to tell everyone you are on your " +
-                         "way.\n" +
+                         "Add the :arrow_right: reaction to a raid post to " +
+                         "tell everyone you are on your way.\n" +
                          "Add the :white_check_mark: reaction to a raid " +
-                         "post in the #raid_feed to tell everyone you have " +
-                         "arrived at the raid.")
+                         "post to tell everyone you have arrived at the " +
+                         "raid.\n" +
+                         "Add the :x: reaction to a raid post to tell " +
+                         "everyone that you have either left a raid or are " +
+                         "no longer on your way.")
 
         return info_msg

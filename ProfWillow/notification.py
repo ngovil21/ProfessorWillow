@@ -21,12 +21,11 @@ async def send_dm(client, user, msg=None, emb=None, count=1):
     except Exception as e:
         if count < 3:
             await asyncio.sleep(5)
-            send_dm(client, user, msg=msg, emb=emb, count=count + 1)
+            await send_dm(client, user, msg=msg, emb=emb, count=count + 1)
         else:
-            log.error(('Faild to send: {} gym to {} due to Discord rate ' +
+            log.error(('Faild to send: To {} due to Discord rate ' +
                       'limits or the end-user blocking the bot').format(
-                          dicts.team[client.user.name], discord.utils.find(
-                              lambda u: u.id == user,
+                          discord.utils.find(lambda u: u.id == user,
                               client.get_all_members()).display_name),
                       e.__class__.__name__, e)
 
@@ -66,7 +65,8 @@ async def notification(client, message, bot_number):
         if (dicts.users[bot_number][user]['paused'] is False and
             (args.areas == [] or
              area in dicts.users[bot_number][user]['areas']) and
-            (pokemon in dicts.users[bot_number][user]['pokemon'] or
+            ((egg is False and
+              pokemon in dicts.users[bot_number][user]['pokemon']) or
              (dicts.users[bot_number][user]['eggs'] is not None and
               egg is True and lvl >= dicts.users[bot_number][user]['eggs']) or
              (dicts.users[bot_number][user]['raids'] is not None and
@@ -89,112 +89,115 @@ async def notification(client, message, bot_number):
 
 
 async def rsvp(client, reaction, user, bot_number):
-    msg = reaction.message.embeds[0]
+    found = False
+    async for message in client.logs_from(discord.utils.find(
+        lambda c: c.id == args.active_raids_channel,
+            client.get_all_channels())):
+        if message.embeds[0]['url'] == reaction.message.embeds[0]['url']:
+            msg = message
+            found = True
+            break
+    if found is False:
+        descript = (reaction.message.embeds[0]['description'] + "\n\nOn " +
+                    "their way:``` ```At the raid:``` ```")
+        try:
+            col = reaction.message.embeds[0]['color']
+        except:
+            col = int('0x4F545C', 16)
+        em = discord.Embed(title=reaction.message.embeds[0]['title'],
+                           url=reaction.message.embeds[0]['url'],
+                           description=descript, color=col)
+        em.set_thumbnail(url=reaction.message.embeds[0]['thumbnail']['url'])
+        try:
+            em.set_image(url=reaction.message.embeds[0]['image']['url'])
+        except:
+            pass
+        msg = await client.send_message(discord.utils.find(
+            lambda c: c.id == args.active_raids_channel,
+            client.get_all_channels()), embed=em)
     omw = []
     here = []
-    for react in reaction.message.reactions:
-        users = await client.get_reaction_users(react)
-        for user_ in users:
-            if react.emoji == '➡':
-                omw.append(user_)
-            elif react.emoji == '✅':
-                here.append(user_)
-    if reaction.emoji == '➡' and user in here:
-        await client.remove_reaction(reaction.message, reaction.emoji, user)
+    descript_split = msg.embeds[0]['description'].split('```')
+    omw = descript_split[1].lstrip().split('\n')
+    here = descript_split[3].lstrip().split('\n')
+    change = False
+    if reaction.emoji == '➡':
+        if user.name in omw:
+            await client.send_message(discord.utils.find(
+                lambda u: u.id == user.id, client.get_all_members()),
+                    ("You already said you were on your way to this raid."))
+        elif user.name in here:
+            await client.send_message(discord.utils.find(
+                lambda u: u.id == user.id, client.get_all_members()),
+                    ("That doesn't make any sense, you said you were " +
+                     "already at the raid but now you are on your way?  If " +
+                     "you are not actually not at the raid, please add the " +
+                     ":x: reaction and try again."))
+        else:
+            change = True
+            omw.append(user.name)
+            await client.send_message(discord.utils.find(
+                lambda u: u.id == user.id, client.get_all_members()),
+                    ("You are on your way to a raid!"))
+    elif reaction.emoji == '✅':
+        if user.name in here:
+            await client.send_message(discord.utils.find(
+                lambda u: u.id == user.id, client.get_all_members()),
+                    ("You already said you were at this gym."))
+        else:
+            change = True
+            here.append(user.name)
+            if user.name in omw:
+                omw.remove(user.name)
+            await client.send_message(discord.utils.find(
+                lambda u: u.id == user.id, client.get_all_members()),
+                    ("You have arrived at a raid!"))
+    elif reaction.emoji == '❌':
+        if user.name in omw:
+            change = True
+            omw.remove(user.name)
+            await client.send_message(discord.utils.find(
+                lambda u: u.id == user.id, client.get_all_members()),
+                    ("You are no longer on your way to this raid!"))
+        elif user.name in here:
+            change = True
+            here.remove(user.name)
+            await client.send_message(discord.utils.find(
+                lambda u: u.id == user.id, client.get_all_members()),
+                    ("You are no longer at this raid!"))
+        else:
+            await client.send_message(discord.utils.find(
+                lambda u: u.id == user.id, client.get_all_members()),
+                    ("You never said you were going to this raid!"))
+    else:
         await client.send_message(discord.utils.find(
             lambda u: u.id == user.id, client.get_all_members()),
-            "That doesn't make any sense `{}`, you said you were already " +
-            "at teh raid but now you are on your way?  If you are not " +
-            "actually not at the raid, please remove your first reaction " +
-            "and try again".format(user.display_name))
-    else:
-        omw = list(set(omw) - set(here))
-        descript = msg['description'] + '\n'
-        if omw != []:
-            descript += "\nOn their way:\n```"
+                ("That is an unrecogized reaction."))
+    if change is True:
+        if len(omw) == 1 and len(here) == 1:
+            await client.delete_message(msg)
+        else:
+            if len(omw) == 1:
+                omw = [' ']
+            if len(here) == 1:
+                here = [' ']
+            descript = descript_split[0] + '```'
             for reactor in omw:
-                descript += reactor.display_name + '\n'
-            descript += '```'
-        if here != []:
-            descript += '\nAt the gym:\n```'
+                descript += reactor + '\n'
+            descript += '```At the raid:```'
             for reactor in here:
-                descript += reactor.display_name + '\n'
+                descript += reactor + '\n'
             descript += '```'
-        try:
-            col = msg['color']
-        except:
-            col = int('0x4F545C', 16)
-        em = discord.Embed(title=msg['title'], url=msg['url'],
-                           description=descript, color=col)
-        em.set_thumbnail(url=msg['thumbnail']['url'])
-        try:
-            em.set_image(url=msg['image']['url'])
-        except:
-            pass
-        for user_ in list(set(omw + here)):
-            if user_ == user:
-                if reaction.emoji == '➡':
-                    dm = "You are on you way to a raid!\n\n"
-                else:
-                    dm = "You have arrived at a raid!\n\n"
-            else:
-                if reaction.emoji == '➡':
-                    dm = ("`{}` is on their way to the " +
-                          "raid!\n\n").format(user.display_name)
-                else:
-                    dm = "`{}` has arrived at the raid!\n\n".format(
-                        user.display_name)
-            await send_dm(client, user_.id, msg=dm, emb=em)
-
-
-async def unrsvp(client, reaction, user, bot_number):
-    msg = reaction.message.embeds[0]
-    omw = []
-    here = []
-    for react in reaction.message.reactions:
-        users = await client.get_reaction_users(react)
-        for user_ in users:
-            if react.emoji == '➡':
-                omw.append(user_)
-            elif react.emoji == '✅':
-                here.append(user_)
-    if reaction.emoji == '➡' and user in here:
-        pass
-    else:
-        omw = list(set(omw) - set(here))
-        descript = msg['description'] + '\n'
-        if omw != []:
-            descript += "\nOn their way:\n```"
-            for reactor in omw:
-                descript += reactor.display_name + '\n'
-            descript += '```'
-        if here != []:
-            descript += '\nAt the gym:\n```'
-            for reactor in here:
-                descript += reactor.display_name + '\n'
-            descript += '```'
-        try:
-            col = msg['color']
-        except:
-            col = int('0x4F545C', 16)
-        em = discord.Embed(title=msg['title'], url=msg['url'],
-                           description=descript, color=col)
-        em.set_thumbnail(url=msg['thumbnail']['url'])
-        try:
-            em.set_image(url=msg['image']['url'])
-        except:
-            pass
-        for user_ in list(set(omw + here)):
-            if user_ == user:
-                if reaction.emoji == '➡':
-                    dm = "You are no longer on you way to a raid!\n\n"
-                else:
-                    dm = "You are no longer at a raid!\n\n"
-            else:
-                if reaction.emoji == '➡':
-                    dm = ("`{}` is no longer on their way to the " +
-                          "raid!\n\n").format(user.display_name)
-                else:
-                    dm = "`{}` is no longer at the raid!\n\n".format(
-                        user.display_name)
-            await send_dm(client, user_.id, msg=dm, emb=em)
+            try:
+                col = msg['color']
+            except:
+                col = int('0x4F545C', 16)
+            em = discord.Embed(title=msg.embeds[0]['title'],
+                               url=msg.embeds[0]['url'],
+                               description=descript, color=col)
+            em.set_thumbnail(url=msg.embeds[0]['thumbnail']['url'])
+            try:
+                em.set_image(url=msg.embeds[0]['image']['url'])
+            except:
+                pass
+            await client.edit_message(msg, embed=em)

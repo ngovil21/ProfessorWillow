@@ -5,7 +5,7 @@ import logging
 import discord
 import asyncio
 from .utils import get_args, Dicts, update_dicts
-from .notification import notification, rsvp, unrsvp
+from .notification import notification, rsvp
 from .commands import (status, add_eggs, add_raids, add, delete_eggs,
                        delete_raids, delete, pause, pause_area, resume,
                        resume_area, subs, commands, dex, donate)
@@ -71,89 +71,75 @@ class Bot(discord.Client):
 
     async def on_reaction_add(self, reaction, user):
         bot_number = args.bot_client_ids.index(self.user.id)
-        if ((reaction.message.channel.id in args.feed_channels or
-             reaction.message.channel.id == args.test_channel) and
-                (reaction.emoji == '➡' or reaction.emoji == '✅')):
+        if (int(user.id) % int(len(args.tokens)) == bot_number and
+            reaction.message.embeds and user.id not in args.bot_client_ids and
+            'egg' not in reaction.message.embeds[0]['title'] and
+            ((reaction.message.channel.id in args.feed_channels or
+              reaction.message.channel.id == args.active_raids_channel) or
+             (reaction.message.channel.is_private and
+              reaction.message.author == self.user))):
+            if reaction.message.channel.is_private is False:
+                await self.remove_reaction(
+                    reaction.message, reaction.emoji, user)
             await rsvp(self, reaction, user, bot_number)
-        elif (int(user.id) % int(len(args.tokens)) == bot_number and
-              (reaction.message.channel.id in args.feed_channels or
-               reaction.message.channel.id == args.test_channel) and
-              (reaction.emoji != '➡' and reaction.emoji != '✅')):
-            await self.remove_reaction(reaction.message, reaction.emoji, user)
-            await self.send_message(discord.utils.find(
-                lambda u: u.id == user.id, self.get_all_members()),
-                'That is an unrecogized reaction, `{}`.'.format(
-                    user.display_name))
-
-    async def on_reaction_remove(self, reaction, user):
-        bot_number = args.bot_client_ids.index(self.user.id)
-        if ((reaction.message.channel.id in args.feed_channels or
-             reaction.message.channel.id == args.test_channel) and
-                (reaction.emoji == '➡' or reaction.emoji == '✅')):
-            await unrsvp(self, reaction, user, bot_number)
 
     async def on_message(self, message):
         bot_number = args.bot_client_ids.index(self.user.id)
-        if message.channel.id in args.feed_channels and message.content == '':
+        if (message.channel.id in args.feed_channels and
+            message.content == ''):
             await notification(self, message, bot_number)
+        if (message.embeds and 'egg' not in message.embeds[0]['title'] and
+            (((message.channel.id in args.feed_channels or
+               message.channel.id == args.active_raids_channel)
+              and bot_number == 0) or
+             (message.channel.is_private and message.author == self.user))):
+            await self.add_reaction(message, '➡')
+            await self.add_reaction(message, '✅')
+            await self.add_reaction(message, '❌')
+            if message.channel.id == args.active_raids_channel:
+                await asyncio.sleep(7200)
+                await self.delete_message(message)
         elif ('%status' == message.content.lower() and
-                message.channel.is_private is not True):
+                not message.channel.is_private):
             await status(self, message, bot_number + 1)
         elif int(message.author.id) % int(len(args.tokens)) == bot_number:
-            if ((message.channel.id == args.subscription_channel or
-                 message.channel.id == args.test_channel) and
-                    '%add egg' == message.content[0:8].lower()):
-                await add_eggs(self, message, bot_number)
-            elif ((message.channel.id == args.subscription_channel or
-                   message.channel.id == args.test_channel) and
-                  '%add raid' == message.content[0:9].lower()):
-                await add_raids(self, message, bot_number)
-            elif ((message.channel.id == args.subscription_channel or
-                   message.channel.id == args.test_channel) and
-                  '%add ' == message.content[0:5].lower()):
-                await add(self, message, bot_number)
-            elif ((message.channel.id == args.subscription_channel or
-                   message.channel.id == args.test_channel) and
-                  ('%delete egg' == message.content[0:11].lower() or
-                   '%remove egg' == message.content[0:11].lower() or
-                   '%gtfo egg' == message.content[0:9].lower())):
-                await delete_eggs(self, message, bot_number)
-            elif ((message.channel.id == args.subscription_channel or
-                   message.channel.id == args.test_channel) and
-                  ('%delete raid' == message.content[0:12].lower() or
-                   '%remove raid' == message.content[0:12].lower() or
-                   '%gtfo raid' == message.content[0:10].lower())):
-                await delete_raids(self, message, bot_number)
-            elif ((message.channel.id == args.subscription_channel or
-                   message.channel.id == args.test_channel) and
-                  ('%delete ' == message.content[0:8].lower() or
-                   '%remove ' == message.content[0:8].lower() or
-                   '%gtfo ' == message.content[0:6].lower())):
-                await delete(self, message, bot_number)
-            elif (message.channel.is_private is False and
-                  ('%pause' == message.content.lower() or
-                   '%p' == message.content.lower())):
-                await pause(self, message, bot_number)
-            elif ((message.channel.id == args.subscription_channel or
-                   message.channel.id == args.test_channel) and
-                  '%pause ' == message.content[0:7]):
-                await pause_area(self, message, bot_number)
-            elif (message.channel.is_private is False and
-                  ('%resume' == message.content.lower() or
-                   '%r' == message.content.lower())):
-                await resume(self, message, bot_number)
-            elif ((message.channel.id == args.subscription_channel or
-                   message.channel.id == args.test_channel) and
-                  '%resume ' == message.content[0:8]):
-                await resume_area(self, message, bot_number)
-            elif ((message.channel.id == args.subscription_channel or
-                   message.channel.id == args.test_channel) and
-                  '%subs' == message.content[0:5]):
-                await subs(self, message, bot_number)
-            elif ('%dex ' == message.content[0:5].lower()):
-                await dex(self, message)
-            elif ('%commands' == message.content.lower() or
-                    '%help' == message.content.lower()):
+            if (message.channel.id == args.subscription_channel or
+                    message.channel.id == args.test_channel):
+                if '%add egg' == message.content[0:8].lower():
+                    await add_eggs(self, message, bot_number)
+                elif '%add raid' == message.content[0:9].lower():
+                    await add_raids(self, message, bot_number)
+                elif '%add ' == message.content[0:5].lower():
+                    await add(self, message, bot_number)
+                elif ('%delete egg' == message.content[0:11].lower() or
+                      '%remove egg' == message.content[0:11].lower() or
+                      '%gtfo egg' == message.content[0:9].lower()):
+                    await delete_eggs(self, message, bot_number)
+                elif ('%delete raid' == message.content[0:12].lower() or
+                      '%remove raid' == message.content[0:12].lower() or
+                      '%gtfo raid' == message.content[0:10].lower()):
+                    await delete_raids(self, message, bot_number)
+                elif ('%delete ' == message.content[0:8].lower() or
+                      '%remove ' == message.content[0:8].lower() or
+                      '%gtfo ' == message.content[0:6].lower()):
+                    await delete(self, message, bot_number)
+                elif '%subs' == message.content[0:5]:
+                    await subs(self, message, bot_number)
+                elif '%pause ' == message.content[0:7]:
+                    await pause_area(self, message, bot_number)
+                elif '%resume ' == message.content[0:8]:
+                    await resume_area(self, message, bot_number)
+            if not message.channel.is_private:
+                if ('%pause' == message.content.lower() or
+                    '%p' == message.content.lower()):
+                    await pause(self, message, bot_number)
+                elif ('%resume' == message.content.lower() or
+                      '%r' == message.content.lower()):
+                    await resume(self, message, bot_number)
+                elif '%dex ' == message.content[0:5].lower():
+                    await dex(self, message)
+            if ('%commands' == message.content.lower() or
+                  '%help' == message.content.lower()):
                 await commands(self, message)
             elif '%donate' == message.content.lower():
                 await donate(self, message)

@@ -33,8 +33,8 @@ async def status(client, message, bot_number):
 
 
 async def add_eggs(client, message, bot_number):
-    msg = message.content.lower().split()[2]
     try:
+        msg = message.content.lower().split()[2]
         if int(msg) <= 5:
             if message.author.id not in dicts.users[bot_number]:
                 dicts.users[bot_number][message.author.id] = {'pokemon': [],
@@ -78,8 +78,8 @@ async def add_eggs(client, message, bot_number):
 
 
 async def add_raids(client, message, bot_number):
-    msg = message.content.lower().split()[2]
     try:
+        msg = message.content.lower().split()[2]
         if int(msg) <= 5:
             if message.author.id not in dicts.users[bot_number]:
                 dicts.users[bot_number][message.author.id] = {
@@ -166,8 +166,8 @@ async def add(client, message, bot_number):
 
 
 async def delete_eggs(client, message, bot_number):
-    msg = message.content.lower().split()[2]
     try:
+        msg = message.content.lower().split()[2]
         if int(msg) <= 5:
             if (message.author.id not in dicts.users[bot_number] or
                 dicts.users[bot_number][message.author.id]['eggs'] is None or
@@ -204,8 +204,8 @@ async def delete_eggs(client, message, bot_number):
 
 
 async def delete_raids(client, message, bot_number):
-    msg = message.content.lower().split()[2]
     try:
+        msg = message.content.lower().split()[2]
         if int(msg) <= 5:
             if (message.author.id not in dicts.users[bot_number] or
                 dicts.users[bot_number][message.author.id]['raids'] is None or
