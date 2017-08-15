@@ -5,7 +5,7 @@ import logging
 import discord
 import asyncio
 from .utils import get_args, Dicts, update_dicts
-from .notification import notification, rsvp
+from .notification import notification, rsvp, send_msgs
 from .commands import (status, add_eggs, add_raids, add, delete_eggs,
                        delete_raids, delete, pause, pause_area, resume,
                        resume_area, subs, commands, dex, donate)
@@ -48,6 +48,7 @@ class Bot(discord.Client):
             log.info("Bot number {} removed {} user(s) from dicts".format(
                 bot_number + 1, count))
         log.info("Bot number {} is ready".format(bot_number + 1))
+        await send_msgs(self, bot_number)
 
     async def on_member_update(self, before, after):
         bot_number = args.bot_client_ids.index(self.user.id)
@@ -72,12 +73,12 @@ class Bot(discord.Client):
     async def on_reaction_add(self, reaction, user):
         bot_number = args.bot_client_ids.index(self.user.id)
         if (int(user.id) % int(len(args.tokens)) == bot_number and
-            reaction.message.embeds and user.id not in args.bot_client_ids and
-            'egg' not in reaction.message.embeds[0]['title'] and
-            ((reaction.message.channel.id in args.feed_channels or
-              reaction.message.channel.id == args.active_raids_channel) or
+            (reaction.message.channel.id in args.feed_channels or
+             reaction.message.channel.id == args.active_raids_channel or
              (reaction.message.channel.is_private and
-              reaction.message.author == self.user))):
+              reaction.message.author == self.user)) and
+            reaction.message.embeds and user.id not in args.bot_client_ids and
+            'egg' not in reaction.message.embeds[0]['title']):
             if reaction.message.channel.is_private is False:
                 await self.remove_reaction(
                     reaction.message, reaction.emoji, user)
@@ -88,15 +89,11 @@ class Bot(discord.Client):
         if (message.channel.id in args.feed_channels and
                 message.content == ''):
             await notification(self, message, bot_number)
-        if (int(message.id) % int(len(args.tokens)) == bot_number) and
-            message.embeds and 'egg' not in message.embeds[0]['title'] and
-            (((message.channel.id in args.feed_channels or
-               message.channel.id == args.active_raids_channel)
-              and bot_number == 0) or
-             (message.channel.is_private and message.author == self.user))):
-            await self.add_reaction(message, '➡')
-            await self.add_reaction(message, '✅')
-            await self.add_reaction(message, '❌')
+        if (int(message.id) % int(len(args.tokens)) == bot_number and
+            (message.channel.id in args.feed_channels or
+             message.channel.id == args.active_raids_channel) and
+                message.embeds and 'egg' not in message.embeds[0]['title']):
+            dicts.msgs[bot_number].append(message)
             if message.channel.id == args.active_raids_channel:
                 await asyncio.sleep(7200)
                 try:

@@ -6,6 +6,7 @@ import configargparse
 import os
 import sys
 import json
+from datetime import datetime
 
 log = logging.getLogger('utils')
 
@@ -60,6 +61,7 @@ def get_args():
 
 class Dicts(object):
     users = []
+    msgs = []
     type_col = {'bug': 0xA8B820,
                 'dark': 0x705848,
                 'dragon': 0x7038F8,
@@ -133,6 +135,7 @@ def get_dicts(number_of_bots):
     dicts = Dicts()
     for bot_num in range(number_of_bots):
         dicts.users.append({})
+        dicts.msgs.append([])
     with open(get_path('../dicts/users.json')) as users_file:
         data = json.load(users_file)
         for user_id in data:

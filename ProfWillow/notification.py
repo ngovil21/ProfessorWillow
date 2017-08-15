@@ -5,6 +5,7 @@ import logging
 import discord
 import asyncio
 import re
+from datetime import datetime
 from .utils import get_args, Dicts
 
 log = logging.getLogger('notification')
@@ -13,23 +14,41 @@ args = get_args()
 dicts = Dicts()
 
 
-async def send_dm(client, user, msg=None, emb=None, count=1):
-    try:
-        await client.send_message(discord.utils.find(
-            lambda u: u.id == user, client.get_all_members()), msg,
-                                  embed=emb)
-    except Exception as e:
-        if count < 3:
-            await asyncio.sleep(5)
-            await send_dm(client, user, msg=msg, emb=emb, count=count + 1)
-        else:
-            log.error(('Faild to send: To {} due to Discord rate ' +
-                      'limits or the end-user blocking the bot').format(
+async def send_msgs(client, bot_number):
+    while True:
+        await asyncio.sleep(0.1)
+        for obj in dicts.msgs[bot_number]:
+            if type(obj) == list:
+                try:
+                    msg = await client.send_message(discord.utils.find(
+                        lambda u: u.id == obj[0], client.get_all_members()),
+                                                   embed=obj[1])
+                    log.info("Sending raid to {}".format(
+                        msg.channel.recipients[0].display_name))
+                except:
+                    log.error(('Faild to send: To {} probably due to the ' +
+                               'end-user blocking the bot').format(
                           discord.utils.find(
-                              lambda u: u.id == user,
+                              lambda u: u.id == obj[0],
                               client.get_all_members()).display_name),
                       e.__class__.__name__, e)
-
+                    continue
+            elif isinstance(obj, discord.message.Message):
+                msg = obj
+                log.info("Reacting to msg in {}".format(msg.channel.name))
+            await client.add_reaction(msg, '➡')
+            await asyncio.sleep(0.25)
+            await client.add_reaction(msg, '✅')
+            await asyncio.sleep(0.25)
+            await client.add_reaction(msg, '❌')
+            await asyncio.sleep(0.25)
+            dicts.msgs[bot_number].remove(obj)
+            log.info("Queue size for bot number {}: {}".format(
+                bot_number + 1, len(dicts.msgs[bot_number])))
+            if len(dicts.msgs[bot_number]) > 50:
+                log.warning(("Queue size for bot number {} is > 50, " +
+                             "consider adding more bots").format(
+                                 bot_number + 1)
 
 async def notification(client, message, bot_number):
     msg = message.embeds[0]
@@ -86,7 +105,7 @@ async def notification(client, message, bot_number):
                 except:
                     pass
                 made = True
-            await send_dm(client, user, emb=em)
+            dicts.msgs[bot_number].append([user, em])
 
 
 async def rsvp(client, reaction, user, bot_number):
@@ -119,8 +138,8 @@ async def rsvp(client, reaction, user, bot_number):
     omw = []
     here = []
     descript_split = msg.embeds[0]['description'].split('```')
-    omw = descript_split[1].lstrip().split('\n')
-    here = descript_split[3].lstrip().split('\n')
+    omw = descript_split[1].split('\n')
+    here = descript_split[3].split('\n')
     change = False
     if reaction.emoji == '➡':
         if user.name in omw:
@@ -175,6 +194,8 @@ async def rsvp(client, reaction, user, bot_number):
             lambda u: u.id == user.id, client.get_all_members()),
                 ("That is an unrecogized reaction."))
     if change is True:
+        print(omw)
+        print(here)
         if len(omw) == 1 and len(here) == 1:
             await client.delete_message(msg)
         else:
