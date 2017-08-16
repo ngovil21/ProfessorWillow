@@ -198,8 +198,6 @@ async def rsvp(client, reaction, user, bot_number):
             lambda u: u.id == user.id, client.get_all_members()),
                 ("That is an unrecogized reaction."))
     if change is True:
-        print(omw)
-        print(here)
         if len(omw) == 0 and len(here) == 0:
             await client.delete_message(msg)
         else:
