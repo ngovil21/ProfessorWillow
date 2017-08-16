@@ -118,7 +118,7 @@ async def rsvp(client, reaction, user, bot_number):
             break
     if found is False:
         descript = (reaction.message.embeds[0]['description'] + "\n\nOn " +
-                    "their way:``` ```At the raid:``` ```")
+                    "their way:\n```\n \n```\nAt the raid:\n```\n \n```")
         try:
             col = reaction.message.embeds[0]['color']
         except:
@@ -139,6 +139,11 @@ async def rsvp(client, reaction, user, bot_number):
     descript_split = msg.embeds[0]['description'].split('```')
     omw = descript_split[1].split('\n')
     here = descript_split[3].split('\n')
+    for list_ in [omw, here]:
+        while '' in list_:
+            list_.remove('')
+        while ' ' in list_:
+            list_.remove(' ')
     change = False
     if reaction.emoji == '➡':
         if user.name in omw:
@@ -195,17 +200,17 @@ async def rsvp(client, reaction, user, bot_number):
     if change is True:
         print(omw)
         print(here)
-        if len(omw) == 1 and len(here) == 1:
+        if len(omw) == 0 and len(here) == 0:
             await client.delete_message(msg)
         else:
-            if len(omw) == 1:
+            if len(omw) == 0:
                 omw = [' ']
-            if len(here) == 1:
+            elif len(here) == 0:
                 here = [' ']
-            descript = descript_split[0] + '```'
+            descript = descript_split[0] + '```\n'
             for reactor in omw:
                 descript += reactor + '\n'
-            descript += '```At the raid:```'
+            descript += '```\nAt the raid:\n```\n'
             for reactor in here:
                 descript += reactor + '\n'
             descript += '```'

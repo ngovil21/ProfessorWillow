@@ -13,6 +13,7 @@ logging.getLogger("websockets").setLevel(logging.ERROR)
 logging.getLogger("requests").setLevel(logging.ERROR)
 
 args = get_args()
+dicts = get_dicts(len(args.tokens))
 
 
 def start_bots():
@@ -40,8 +41,6 @@ def start_bots():
         log.info("All users will automatically be added to all areas")
     else:
         log.info("All users will automatically be added to no areas")
-    log.info("Setting up dictionaries")
-    dicts = get_dicts(len(args.tokens))
     log.info("Starting Clients")
     start_clients()
 
