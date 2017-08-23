@@ -385,7 +385,7 @@ async def subs(client, message, bot_number):
                     msg += area.title() + '\n'
         else:
             msg += '\n__ALERT AREA__\n'
-            for area in dicts.users[message.author.id]['areas']:
+            for area in dicts.users[bot_number][message.author.id]['areas']:
                 msg += area.title() + '\n'
         msg += '\nEGG ALERT LEVEL: ' + str(dicts.users[bot_number][
             message.author.id]['eggs']) + '+'
