@@ -112,7 +112,8 @@ async def rsvp(client, reaction, user, bot_number):
     async for message in client.logs_from(discord.utils.find(
         lambda c: c.id == args.active_raids_channel,
             client.get_all_channels())):
-        if message.embeds[0]['url'] == reaction.message.embeds[0]['url']:
+        if (len(message.embeds) > 0 and
+                message.embeds[0]['url'] == reaction.message.embeds[0]['url']):
             msg = message
             found = True
             break
