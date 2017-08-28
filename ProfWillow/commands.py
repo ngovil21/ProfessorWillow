@@ -306,13 +306,16 @@ async def pause_area(client, message, bot_number):
                     'areas']:
                 msg = (msg + (
                     'Your alerts are already paused for the `{}` area, ' +
-                    '`{}`.\n').format(area.title(), message.author.display_name))
+                    '`{}`.\n').format(
+                        area.title(), message.author.display_name))
             else:
-                dicts.users[bot_number][message.author.id]['areas'].remove(area)
+                dicts.users[bot_number][
+                    message.author.id]['areas'].remove(area)
                 update_dicts(len(args.tokens))
                 msg = (msg + (
                     'Your alerts have been paused for the `{}` area, ' +
-                    '`{}`.\n').format(area.title(), message.author.display_name))
+                    '`{}`.\n').format(
+                        area.title(), message.author.display_name))
         else:
             msg = (msg + (
                 "That's not any area I know of in this region, `{}`\n").format(
@@ -356,13 +359,14 @@ async def resume_area(client, message, bot_number):
                 msg = (msg + ('Your alerts were not previously paused for ' +
                        'the `{}` area.\n').format(area.title()))
             else:
-                dicts.users[bot_number][message.author.id]['areas'].append(area)
+                dicts.users[bot_number][
+                    message.author.id]['areas'].append(area)
                 update_dicts(len(args.tokens))
                 msg = (msg + ('Your alerts have been resumed for the `{}` ' +
                        'area.\n').format(area.title()))
         else:
             msg = (msg + ("That's not any area I know of in this region\n"
-                   ).format(message.author.display_name))
+                          ).format(message.author.display_name))
     if len(msg) > 0:
         await sendBigText(client, msg, find_user(message.author.id, client))
     await client.delete_message(message)
@@ -370,18 +374,19 @@ async def resume_area(client, message, bot_number):
 
 async def sendBigText(client, message, destination):
     if len(message) < 2000:
-        await client.send_message(destination,message)
+        await client.send_message(destination, message)
     else:
         lines = message.split("\n")
         msg = ""
         for line in lines:
             if len(line) + len(msg) + 1 > 2000:
-                await client.send_message(destination,msg)
+                await client.send_message(destination, msg)
                 msg = ""
             else:
                 msg = msg + "\n" + line
         if len(msg) > 0:
-            await client.send_message(destination,msg)
+            await client.send_message(destination, msg)
+
 
 async def subs(client, message, bot_number):
     msg = message.author.display_name + "'s Raid Notification Settings:\n"
