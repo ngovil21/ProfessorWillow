@@ -175,7 +175,7 @@ def info_msg(feed_channels):
                          "given raid level,\n" +
                          "`%delete [pokemon]` or `%remove [pokemon]` to " +
                          "delete notifications for a given raid pokemon,\n" +
-                         "`%pause` or `%p` to pause all notifcations,\n" +
+                         "`%pause` or `%p` to pause all notifications,\n" +
                          "`%pause [area/all]` to pause a given area or all " +
                          "areas,\n" +
                          "`%resume` or `%r` to resume all notifications,\n" +
@@ -185,10 +185,11 @@ def info_msg(feed_channels):
                          "`%dex [pokemon]` to get pokemon information,\n" +
                          "`%status` to see which bots are currently " +
                          "online,\n" +
+                         "`%areas` to see valid area names,\n" +
                          "`%donate` to see donation information for this " +
                          "project.\n" +
                          "It is possible to add or delete multiple pokemon " +
-                         "by putting pokemon on seperate lines or " +
+                         "by putting pokemon on separate lines or " +
                          "separating them with commas.\n" +
                          "Commands should be in the " +
                          "raid_subscription_channel.\n\n" +

@@ -289,33 +289,37 @@ async def pause(client, message, bot_number):
 
 async def pause_area(client, message, bot_number):
     if message.content.lower() == '%pause all':
-        msg = args.areas
+        areas = args.areas
     else:
-        msg = message.content.lower().replace('%pause ', '').replace(
-            '%pause\n', '').replace(',\n', ',').replace('\n', ',').replace(
+        areas = message.content.lower().replace('%pause ', '').replace(
+                '%pause\n', '').replace(',\n', ',').replace('\n', ',').replace(
                 ', ', ',').split(',')
-    for cmd in msg:
-        if cmd in args.areas:
+    msg = ""
+    for area in areas:
+        if area in args.areas:
             if message.author.id not in dicts.users[bot_number]:
-                await client.send_message(message.channel, (
+                msg = (msg + (
                     "There is nothing to pause, `{}`, I'm not alerting you " +
-                    "to any raids or eggs.").format(
+                    "to any raids or eggs.\n").format(
                         message.author.display_name))
-            elif cmd not in dicts.users[bot_number][message.author.id][
+            elif area not in dicts.users[bot_number][message.author.id][
                     'areas']:
-                await client.send_message(message.channel, (
+                msg = (msg + (
                     'Your alerts are already paused for the `{}` area, ' +
-                    '`{}`.').format(cmd.title(), message.author.display_name))
+                    '`{}`.\n').format(area.title(), message.author.display_name))
             else:
-                dicts.users[bot_number][message.author.id]['areas'].remove(cmd)
+                dicts.users[bot_number][message.author.id]['areas'].remove(area)
                 update_dicts(len(args.tokens))
-                await client.send_message(message.channel, (
+                msg = (msg + (
                     'Your alerts have been paused for the `{}` area, ' +
-                    '`{}`.').format(cmd.title(), message.author.display_name))
+                    '`{}`.\n').format(area.title(), message.author.display_name))
         else:
-            await client.send_message(message.channel, (
-                "That's not any area I know of in this region, `{}`").format(
+            msg = (msg + (
+                "That's not any area I know of in this region, `{}`\n").format(
                     message.author.display_name))
+    if len(msg) > 0:
+        await sendBigText(client, msg, find_user(message.author.id, client))
+    await client.delete_message(message)
 
 
 async def resume(client, message, bot_number):
@@ -337,34 +341,47 @@ async def resume(client, message, bot_number):
 
 async def resume_area(client, message, bot_number):
     if message.content.lower() == '%resume all':
-        msg = args.areas
+        areas = args.areas
     else:
-        msg = message.content.lower().replace('%resume ', '').replace(
-            '%resume\n', '').replace(',\n', ',').replace('\n', ',').replace(
-                ', ', ',').split(',')
-    for cmd in msg:
-        if cmd in args.areas:
+        areas = message.content.lower().replace('%resume ', '').replace(
+                '%resume\n', '').replace(',\n', ',').replace(
+                '\n', ',').replace(', ', ',').split(',')
+    msg = ""
+    for area in areas:
+        if area in args.areas:
             if message.author.id not in dicts.users[bot_number]:
-                await client.send_message(message.channel, (
-                    "There is nothing to resume, `{}`, I'm not alerting you " +
-                    "to any raids or eggs.").format(
-                        message.author.display_name))
-            elif cmd in dicts.users[bot_number][message.author.id]['areas']:
-                await client.send_message(message.channel, (
-                    'Your alerts were not previously paused for the `{}` ' +
-                    'area, `{}`.').format(
-                        cmd.title(), message.author.display_name))
+                msg = (msg + ("There is nothing to resume, I'm not " +
+                       "alerting you to any raids or eggs.\n"))
+            elif area in dicts.users[bot_number][message.author.id]['areas']:
+                msg = (msg + ('Your alerts were not previously paused for ' +
+                       'the `{}` area.\n').format(area.title()))
             else:
-                dicts.users[bot_number][message.author.id]['areas'].append(cmd)
+                dicts.users[bot_number][message.author.id]['areas'].append(area)
                 update_dicts(len(args.tokens))
-                await client.send_message(message.channel, (
-                    'Your alerts have been resumed for the `{}` area, ' +
-                    '`{}`.').format(cmd.title(), message.author.display_name))
+                msg = (msg + ('Your alerts have been resumed for the `{}` ' +
+                       'area.\n').format(area.title()))
         else:
-            await client.send_message(message.channel, (
-                "That's not any area I know of in this region, `{}`").format(
-                    message.author.display_name))
+            msg = (msg + ("That's not any area I know of in this region\n"
+                   ).format(message.author.display_name))
+    if len(msg) > 0:
+        await sendBigText(client, msg, find_user(message.author.id, client))
+    await client.delete_message(message)
 
+
+async def sendBigText(client, message, destination):
+    if len(message) < 2000:
+        await client.send_message(destination,message)
+    else:
+        lines = message.split("\n")
+        msg = ""
+        for line in lines:
+            if len(line) + len(msg) + 1 > 2000:
+                await client.send_message(destination,msg)
+                msg = ""
+            else:
+                msg = msg + "\n" + line
+        if len(msg) > 0:
+            await client.send_message(destination,msg)
 
 async def subs(client, message, bot_number):
     msg = message.author.display_name + "'s Raid Notification Settings:\n"
@@ -385,7 +402,7 @@ async def subs(client, message, bot_number):
                     msg += area.title() + '\n'
         else:
             msg += '\n__ALERT AREA__\n'
-            for area in dicts.users[message.author.id]['areas']:
+            for area in dicts.users[bot_number][message.author.id]['areas']:
                 msg += area.title() + '\n'
         msg += '\nEGG ALERT LEVEL: ' + str(dicts.users[bot_number][
             message.author.id]['eggs']) + '+'
@@ -407,8 +424,7 @@ async def subs(client, message, bot_number):
                 lambda u: u.id == message.author.id, client.get_all_members()),
                                       dm)
     else:
-        await client.send_message(discord.utils.find(
-            lambda u: u.id == message.author.id, client.get_all_members()),
+        await client.send_message(find_user(message.author.id, client),
                                   "You haven't set any subscriptions!")
     await client.delete_message(message)
 
@@ -605,6 +621,16 @@ async def commands(client, message):
     await client.delete_message(delete)
 
 
+async def areas(client, message):
+    msg = ("Valid areas: \n" +
+           "\n".join(sorted(args.areas)).title())
+    delete = await client.send_message(
+        message.channel, msg)
+    await client.delete_message(message)
+    await asyncio.sleep(60)
+    await client.delete_message(delete)
+
+
 async def donate(client, message):
     msg_title = "DONATION INFORMATION"
     descript = ("Support this project!\n" +
@@ -616,3 +642,7 @@ async def donate(client, message):
     em = discord.Embed(title=msg_title, description=descript, color=col)
     await client.send_message(message.channel, embed=em)
     await client.delete_message(message)
+
+
+def find_user(id, client):
+    return discord.utils.find(lambda u: u.id == id, client.get_all_members())

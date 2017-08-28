@@ -49,6 +49,18 @@ async def send_msgs(client, bot_number):
                                  bot_number + 1))
 
 
+def getLevel(msg):
+    lvlStr = ['lvl', 'level', 'nivel']
+    fields = ['title', 'description']
+    lvl = 1
+    for field in fields:
+        for text in lvlStr:
+            if text in msg[field].lower():
+                lvl = int(re.search(r'\d+', msg[field].lower().split(text)[
+                    1]).group())
+    return lvl
+
+
 async def notification(client, message, bot_number):
     msg = message.embeds[0]
     made = False
@@ -59,20 +71,7 @@ async def notification(client, message, bot_number):
         pokemon = next(pokemon for pokemon in dicts.pokemon if pokemon in msg[
             'title'].lower().replace('nidoran♀', 'nidoranf').replace(
                 'nidoran♂', 'nidoranm'))
-    if 'lvl' in msg['title'].lower():
-        lvl = int(re.search(r'\d+', msg['title'].lower().split('lvl')[
-            1]).group())
-    elif 'lvl' in msg['description'].lower():
-        lvl = int(re.search(
-            r'\d+', msg['description'].lower().split('lvl')[1]).group())
-    elif 'level' in msg['title'].lower():
-        lvl = int(re.search(r'\d+', msg['title'].lower().split('level')[
-            1]).group())
-    elif 'level' in msg['description'].lower():
-        lvl = int(re.search(
-            r'\d+', msg['description'].lower().split('level')[1]).group())
-    else:
-        lvl = 1
+    lvl = getLevel(msg)
     if args.areas != []:
         try:
             area = next(area for area in args.areas if area in msg[
@@ -112,7 +111,8 @@ async def rsvp(client, reaction, user, bot_number):
     async for message in client.logs_from(discord.utils.find(
         lambda c: c.id == args.active_raids_channel,
             client.get_all_channels())):
-        if message.embeds[0]['url'] == reaction.message.embeds[0]['url']:
+        if (len(message.embeds) > 0 and
+                message.embeds[0]['url'] == reaction.message.embeds[0]['url']):
             msg = message
             found = True
             break

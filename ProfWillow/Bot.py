@@ -8,7 +8,7 @@ from .utils import get_args, Dicts, update_dicts
 from .notification import notification, rsvp, send_msgs
 from .commands import (status, add_eggs, add_raids, add, delete_eggs,
                        delete_raids, delete, pause, pause_area, resume,
-                       resume_area, subs, commands, dex, donate)
+                       resume_area, subs, commands, dex, donate, areas)
 
 log = logging.getLogger('Bot')
 
@@ -144,3 +144,5 @@ class Bot(discord.Client):
                 await commands(self, message)
             elif '%donate' == message.content.lower():
                 await donate(self, message)
+            elif '%areas' == message.content.lower():
+                await areas(self, message)
