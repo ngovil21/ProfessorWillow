@@ -1,6 +1,8 @@
 # ProfessorWillow
 
-![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg) ![License](https://img.shields.io/github/license/friscoMad/ProfessorWillow.svg) [![Build Status](https://travis-ci.org/friscoMad/ProfessorWillow.svg?branch=master)](https://travis-ci.org/friscoMad/ProfessorWillow) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/raparicio)
+![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg) ![License](https://img.shields.io/github/license/friscoMad/ProfessorWillow.svg)
+[![Build Status](https://travis-ci.org/friscoMad/ProfessorWillow.svg?branch=master)](https://travis-ci.org/friscoMad/ProfessorWillow) [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/raparicio)
+[![Discord](https://img.shields.io/discord/351685980128018433.svg)](https://discord.gg/rEfST4h)
 
 
 A raid notification and pokedex bot.
@@ -14,7 +16,7 @@ This bot was developed by @tallypokemap, he did stop the development as he sold 
 **Requirements:**
 
 1. Python3
-2. Create your bot and get credentials, do not add to your server yet. Here is a link on how to set it up: https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token 
+2. Create your bot and get credentials, do not add to your server yet. Here is a link on how to set it up: https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token
 3. Use this url to give the add your bot to your server with the proper permissions: https://discordapp.com/oauth2/authorize?client_id=INSERT_CLIENT_ID_HERE&scope=bot&permissions=93248
 
 
@@ -30,7 +32,7 @@ This bot was developed by @tallypokemap, he did stop the development as he sold 
 
 1. Copy `/config/config.ini.example` to `/config/config.ini` in the config folder.
 2. Set the `tokens`, `bot_client_ids`,`feed_channels`, `active_raids_channel` and any other optional variables in the config file. Check this to get the channel Ids https://support.discordapp.com/hc/en-us/articles/206346498 (it is like server but clicking on channel).
-3. Copy `/dicts/user.json.example` to `/dicts/user.json` 
+3. Copy `/dicts/user.json.example` to `/dicts/user.json`
 4. `python3 start_willow.py`
 5. `%commands` if you need a list of commands.
 
