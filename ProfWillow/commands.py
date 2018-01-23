@@ -609,7 +609,7 @@ def dex(client, message):
                            color=dicts.type_col[
                                types[0].get_text().split()[0].lower()])
         em.set_thumbnail(
-            url=('https://raw.githubusercontent.com/kvangent/PokeAlarm/' +
+            url=('https://raw.githubusercontent.com/Gladiator10864/PokeAlarm/' +
                  'master/icons/{}.png').format(dex_number))
         return client.send_message(message.channel, embed=em)
     else:
