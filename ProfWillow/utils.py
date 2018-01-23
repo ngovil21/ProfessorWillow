@@ -80,54 +80,49 @@ class Dicts(object):
                 'steel': 0xB8B8D0,
                 'water': 0x6890F0
                 }
-    pokemon = ['bulbasaur', 'ivysaur', 'venusaur', 'charmander', 'charmeleon',
-               'charizard', 'squirtle', 'wartortle', 'blastoise', 'caterpie',
-               'metapod', 'butterfree', 'weedle', 'kakuna', 'beedrill',
-               'pidgey', 'pidgeotto', 'pidgeot', 'rattata', 'raticate',
-               'spearow', 'fearow', 'ekans', 'arbok', 'pikachu', 'raichu',
-               'sandshrew', 'sandslash', 'nidoran♀', 'nidorina', 'nidoqueen',
-               'nidoran♂', 'nidorino', 'nidoking', 'clefairy', 'clefable',
-               'vulpix', 'ninetales', 'jigglypuff', 'wigglytuff', 'zubat',
-               'golbat', 'oddish', 'gloom', 'vileplume', 'paras', 'parasect',
-               'venonat', 'venomoth', 'diglett', 'dugtrio', 'meowth',
-               'persian', 'psyduck', 'golduck', 'mankey', 'primeape',
-               'growlithe', 'arcanine', 'poliwag', 'poliwhirl', 'poliwrath',
-               'abra', 'kadabra', 'alakazam', 'machop', 'machoke', 'machamp',
-               'bellsprout', 'weepinbell', 'victreebel', 'tentacool',
-               'tentacruel', 'geodude', 'graveler', 'golem', 'ponyta',
-               'rapidash', 'slowpoke', 'slowbro', 'magnemite', 'magneton',
-               "farfetch'd", 'doduo', 'dodrio', 'seel', 'dewgong', 'grimer',
-               'muk', 'shellder', 'cloyster', 'gastly', 'haunter', 'gengar',
-               'onix', 'drowzee', 'hypno', 'krabby', 'kingler', 'voltorb',
-               'electrode', 'exeggcute', 'exeggutor', 'cubone', 'marowak',
-               'hitmonlee', 'hitmonchan', 'lickitung', 'koffing', 'weezing',
-               'rhyhorn', 'rhydon', 'chansey', 'tangela', 'kangaskhan',
-               'horsea', 'seadra', 'goldeen', 'seaking', 'staryu', 'starmie',
-               'mr. mime', 'scyther', 'jynx', 'electabuzz', 'magmar', 'pinsir',
-               'tauros', 'magikarp', 'gyarados', 'lapras', 'ditto', 'eevee',
-               'vaporeon', 'jolteon', 'flareon', 'porygon', 'omanyte',
-               'omastar', 'kabuto', 'kabutops', 'aerodactyl', 'snorlax',
-               'articuno', 'zapdos', 'moltres', 'dratini', 'dragonair',
-               'dragonite', 'mewtwo', 'mew', 'chikorita', 'bayleef',
-               'meganium', 'cyndaquil', 'quilava', 'typhlosion', 'totodile',
-               'croconaw', 'feraligatr', 'sentret', 'furret', 'hoothoot',
-               'noctowl', 'ledyba', 'ledian', 'spinarak', 'ariados', 'crobat',
-               'chinchou', 'lanturn', 'pichu', 'cleffa', 'igglybuff', 'togepi',
-               'togetic', 'natu', 'xatu', 'mareep', 'flaaffy', 'ampharos',
-               'bellossom', 'marill', 'azumarill', 'sudowoodo', 'politoed',
-               'hoppip', 'skiploom', 'jumpluff', 'aipom', 'sunkern',
-               'sunflora', 'yanma', 'wooper', 'quagsire', 'espeon', 'umbreon',
-               'murkrow', 'slowking', 'misdreavus', 'unown', 'wobbuffet',
-               'girafarig', 'pineco', 'forretress', 'dunsparce', 'gligar',
-               'steelix', 'snubbull', 'granbull', 'qwilfish', 'scizor',
-               'shuckle', 'heracross', 'sneasel', 'teddiursa', 'ursaring',
-               'slugma', 'magcargo', 'swinub', 'piloswine', 'corsola',
-               'remoraid', 'octillery', 'delibird', 'mantine', 'skarmory',
-               'houndour', 'houndoom', 'kingdra', 'phanpy', 'donphan',
-               'porygon2', 'stantler', 'smeargle', 'tyrogue', 'hitmontop',
-               'smoochum', 'elekid', 'magby', 'miltank', 'blissey', 'raikou',
-               'entei', 'suicune', 'larvitar', 'pupitar', 'tyranitar', 'lugia',
-               'ho-oh', 'celebi']
+    pokemon = ['bulbasaur', 'ivysaur', 'venusaur', 'charmander', 'charmeleon', 'charizard', 'squirtle', 'wartortle',
+               'blastoise', 'caterpie', 'metapod', 'butterfree', 'weedle', 'kakuna', 'beedrill', 'pidgey', 'pidgeotto',
+               'pidgeot', 'rattata', 'raticate', 'spearow', 'fearow', 'ekans', 'arbok', 'pikachu', 'raichu',
+               'sandshrew', 'sandslash', 'nidoran♀', 'nidorina', 'nidoqueen', 'nidoran♂', 'nidorino', 'nidoking',
+               'clefairy', 'clefable', 'vulpix', 'ninetales', 'jigglypuff', 'wigglytuff', 'zubat', 'golbat', 'oddish',
+               'gloom', 'vileplume', 'paras', 'parasect', 'venonat', 'venomoth', 'diglett', 'dugtrio', 'meowth',
+               'persian', 'psyduck', 'golduck', 'mankey', 'primeape', 'growlithe', 'arcanine', 'poliwag', 'poliwhirl',
+               'poliwrath', 'abra', 'kadabra', 'alakazam', 'machop', 'machoke', 'machamp', 'bellsprout', 'weepinbell',
+               'victreebel', 'tentacool', 'tentacruel', 'geodude', 'graveler', 'golem', 'ponyta', 'rapidash',
+               'slowpoke', 'slowbro', 'magnemite', 'magneton', 'farfetch’d', 'doduo', 'dodrio', 'seel', 'dewgong',
+               'grimer', 'muk', 'shellder', 'cloyster', 'gastly', 'haunter', 'gengar', 'onix', 'drowzee', 'hypno',
+               'krabby', 'kingler', 'voltorb', 'electrode', 'exeggcute', 'exeggutor', 'cubone', 'marowak', 'hitmonlee',
+               'hitmonchan', 'lickitung', 'koffing', 'weezing', 'rhyhorn', 'rhydon', 'chansey', 'tangela', 'kangaskhan',
+               'horsea', 'seadra', 'goldeen', 'seaking', 'staryu', 'starmie', 'mr. mime', 'scyther', 'jynx',
+               'electabuzz', 'magmar', 'pinsir', 'tauros', 'magikarp', 'gyarados', 'lapras', 'ditto', 'eevee',
+               'vaporeon', 'jolteon', 'flareon', 'porygon', 'omanyte', 'omastar', 'kabuto', 'kabutops', 'aerodactyl',
+               'snorlax', 'articuno', 'zapdos', 'moltres', 'dratini', 'dragonair', 'dragonite', 'mewtwo', 'mew',
+               'chikorita', 'bayleef', 'meganium', 'cyndaquil', 'quilava', 'typhlosion', 'totodile', 'croconaw',
+               'feraligatr', 'sentret', 'furret', 'hoothoot', 'noctowl', 'ledyba', 'ledian', 'spinarak', 'ariados',
+               'crobat', 'chinchou', 'lanturn', 'pichu', 'cleffa', 'igglybuff', 'togepi', 'togetic', 'natu', 'xatu',
+               'mareep', 'flaaffy', 'ampharos', 'bellossom', 'marill', 'azumarill', 'sudowoodo', 'politoed', 'hoppip',
+               'skiploom', 'jumpluff', 'aipom', 'sunkern', 'sunflora', 'yanma', 'wooper', 'quagsire', 'espeon',
+               'umbreon', 'murkrow', 'slowking', 'misdreavus', 'unown', 'wobbuffet', 'girafarig', 'pineco',
+               'forretress', 'dunsparce', 'gligar', 'steelix', 'snubbull', 'granbull', 'qwilfish', 'scizor', 'shuckle',
+               'heracross', 'sneasel', 'teddiursa', 'ursaring', 'slugma', 'magcargo', 'swinub', 'piloswine', 'corsola',
+               'remoraid', 'octillery', 'delibird', 'mantine', 'skarmory', 'houndour', 'houndoom', 'kingdra', 'phanpy',
+               'donphan', 'porygon2', 'stantler', 'smeargle', 'tyrogue', 'hitmontop', 'smoochum', 'elekid', 'magby',
+               'miltank', 'blissey', 'raikou', 'entei', 'suicune', 'larvitar', 'pupitar', 'tyranitar', 'lugia', 'ho-oh',
+               'celebi', 'treecko', 'grovyle', 'sceptile', 'torchic', 'combusken', 'blaziken', 'mudkip', 'marshtomp',
+               'swampert', 'poochyena', 'mightyena', 'zigzagoon', 'linoone', 'wurmple', 'silcoon', 'beautifly',
+               'cascoon', 'dustox', 'lotad', 'lombre', 'ludicolo', 'seedot', 'nuzleaf', 'shiftry', 'taillow', 'swellow',
+               'wingull', 'pelipper', 'ralts', 'kirlia', 'gardevoir', 'surskit', 'masquerain', 'shroomish', 'breloom',
+               'slakoth', 'vigoroth', 'slaking', 'nincada', 'ninjask', 'shedinja', 'whismur', 'loudred', 'exploud',
+               'makuhita', 'hariyama', 'azurill', 'nosepass', 'skitty', 'delcatty', 'sableye', 'mawile', 'aron',
+               'lairon', 'aggron', 'meditite', 'medicham', 'electrike', 'manectric', 'plusle', 'minun', 'volbeat',
+               'illumise', 'roselia', 'gulpin', 'swalot', 'carvanha', 'sharpedo', 'wailmer', 'wailord', 'numel',
+               'camerupt', 'torkoal', 'spoink', 'grumpig', 'spinda', 'trapinch', 'vibrava', 'flygon', 'cacnea',
+               'cacturne', 'swablu', 'altaria', 'zangoose', 'seviper', 'lunatone', 'solrock', 'barboach', 'whiscash',
+               'corphish', 'crawdaunt', 'baltoy', 'claydol', 'lileep', 'cradily', 'anorith', 'armaldo', 'feebas',
+               'milotic', 'castform', 'kecleon', 'shuppet', 'banette', 'duskull', 'dusclops', 'tropius', 'chimecho',
+               'absol', 'wynaut', 'snorunt', 'glalie', 'spheal', 'sealeo', 'walrein', 'clamperl', 'huntail', 'gorebyss',
+               'relicanth', 'luvdisc', 'bagon', 'shelgon', 'salamence', 'beldum', 'metang', 'metagross', 'regirock',
+               'regice', 'registeel', 'latias', 'latios', 'kyogre', 'groudon', 'rayquaza', 'jirachi', 'deoxys']
 
 
 def get_dicts(number_of_bots):
@@ -159,48 +154,48 @@ def truncate(msg):
 
 
 def info_msg(feed_channels):
-        info_msg = "Hello there! I am Professor Willow. \n"
-        if feed_channels is True:
-            info_msg += ("`%add eggs [level]` to get notifications when an " +
-                         "given level egg appears at the top of a gym,\n" +
-                         "`%add raids [level]` to get notifications when an " +
-                         "give level of pokemon takes over a gym,\n" +
-                         "`%add [pokemon]` to notifications when a given " +
-                         "pokemon takes over a gym,\n" +
-                         "`%delete eggs [level]` or `%remove eggs [level]` " +
-                         "to delete notifications for below a given egg " +
-                         "level,\n" +
-                         "`%delete raids [level]` or `%remove raids " +
-                         "[level]` to delete notifications for below a " +
-                         "given raid level,\n" +
-                         "`%delete [pokemon]` or `%remove [pokemon]` to " +
-                         "delete notifications for a given raid pokemon,\n" +
-                         "`%pause` or `%p` to pause all notifications,\n" +
-                         "`%pause [area/all]` to pause a given area or all " +
-                         "areas,\n" +
-                         "`%resume` or `%r` to resume all notifications,\n" +
-                         "`%resume [area/all]` to resume a given area or " +
-                         "all areas,\n" +
-                         "`%subs` to see your notication settings,\n" +
-                         "`%dex [pokemon]` to get pokemon information,\n" +
-                         "`%status` to see which bots are currently " +
-                         "online,\n" +
-                         "`%areas` to see valid area names,\n" +
-                         "`%donate` to see donation information for this " +
-                         "project.\n" +
-                         "It is possible to add or delete multiple pokemon " +
-                         "by putting pokemon on separate lines or " +
-                         "separating them with commas.\n" +
-                         "Commands should be in the " +
-                         "raid_subscription_channel.\n\n" +
-                         "To rsvp for a raid:\n" +
-                         "Add the :arrow_right: reaction to a raid post to " +
-                         "tell everyone you are on your way.\n" +
-                         "Add the :white_check_mark: reaction to a raid " +
-                         "post to tell everyone you have arrived at the " +
-                         "raid.\n" +
-                         "Add the :x: reaction to a raid post to tell " +
-                         "everyone that you have either left a raid or are " +
-                         "no longer on your way.")
+    info_msg = "Hello there! I am Professor Willow. \n"
+    if feed_channels is True:
+        info_msg += ("`%add eggs [level]` to get notifications when an " +
+                     "given level egg appears at the top of a gym,\n" +
+                     "`%add raids [level]` to get notifications when an " +
+                     "give level of pokemon takes over a gym,\n" +
+                     "`%add [pokemon]` to notifications when a given " +
+                     "pokemon takes over a gym,\n" +
+                     "`%delete eggs [level]` or `%remove eggs [level]` " +
+                     "to delete notifications for below a given egg " +
+                     "level,\n" +
+                     "`%delete raids [level]` or `%remove raids " +
+                     "[level]` to delete notifications for below a " +
+                     "given raid level,\n" +
+                     "`%delete [pokemon]` or `%remove [pokemon]` to " +
+                     "delete notifications for a given raid pokemon,\n" +
+                     "`%pause` or `%p` to pause all notifications,\n" +
+                     "`%pause [area/all]` to pause a given area or all " +
+                     "areas,\n" +
+                     "`%resume` or `%r` to resume all notifications,\n" +
+                     "`%resume [area/all]` to resume a given area or " +
+                     "all areas,\n" +
+                     "`%subs` to see your notication settings,\n" +
+                     "`%dex [pokemon]` to get pokemon information,\n" +
+                     "`%status` to see which bots are currently " +
+                     "online,\n" +
+                     "`%areas` to see valid area names,\n" +
+                     "`%donate` to see donation information for this " +
+                     "project.\n" +
+                     "It is possible to add or delete multiple pokemon " +
+                     "by putting pokemon on separate lines or " +
+                     "separating them with commas.\n" +
+                     "Commands should be in the " +
+                     "raid_subscription_channel.\n\n" +
+                     "To rsvp for a raid:\n" +
+                     "Add the :arrow_right: reaction to a raid post to " +
+                     "tell everyone you are on your way.\n" +
+                     "Add the :white_check_mark: reaction to a raid " +
+                     "post to tell everyone you have arrived at the " +
+                     "raid.\n" +
+                     "Add the :x: reaction to a raid post to tell " +
+                     "everyone that you have either left a raid or are " +
+                     "no longer on your way.")
 
-        return info_msg
+    return info_msg
