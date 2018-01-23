@@ -4,9 +4,9 @@
 import logging
 import discord
 import asyncio
-from utils import get_args, Dicts, update_dicts
-from notification import notification, rsvp, send_msgs
-from commands import (status, add_eggs, add_raids, add, delete_eggs,
+from .utils import get_args, Dicts, update_dicts
+from .notification import notification, rsvp, send_msgs
+from .commands import (status, add_eggs, add_raids, add, delete_eggs,
                        delete_raids, delete, pause, pause_area, resume,
                        resume_area, subs, commands, dex, donate, areas)
 
