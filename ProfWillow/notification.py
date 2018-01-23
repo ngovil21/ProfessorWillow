@@ -62,6 +62,7 @@ def getLevel(msg):
 
 
 async def notification(client, message, bot_number):
+    return
     msg = message.embeds[0]
     made = False
     if 'egg' in msg['title']:
