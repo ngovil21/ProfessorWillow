@@ -211,10 +211,10 @@ async def rsvp(client, reaction, user, bot_number):
                 here = [' ']
             descript = descript_split[0] + '```\n'
             for reactor in omw:
-                descript += reactor + '\n'
+                descript += "@" + reactor + '\n'
             descript += '```\nAt the raid:\n```\n'
             for reactor in here:
-                descript += reactor + '\n'
+                descript += "@" + reactor + '\n'
             descript += '```'
             try:
                 col = msg['color']
