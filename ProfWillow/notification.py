@@ -148,9 +148,10 @@ async def rsvp(client, reaction, user, bot_number):
     change = False
     if reaction.emoji == '➡':
         if user.name in omw:
-            await client.send_message(discord.utils.find(
-                lambda u: u.id == user.id, client.get_all_members()),
-                    ("You already said you were on your way to this raid."))
+            # await client.send_message(discord.utils.find(
+            #     lambda u: u.id == user.id, client.get_all_members()),
+            #         ("You already said you were on your way to this raid."))
+            pass
         elif user.name in here:
             await client.send_message(discord.utils.find(
                 lambda u: u.id == user.id, client.get_all_members()),
@@ -161,43 +162,45 @@ async def rsvp(client, reaction, user, bot_number):
         else:
             change = True
             omw.append(user.name)
-            await client.send_message(discord.utils.find(
-                lambda u: u.id == user.id, client.get_all_members()),
-                    ("You are on your way to a raid!"))
+            # await client.send_message(discord.utils.find(
+            #     lambda u: u.id == user.id, client.get_all_members()),
+            #         ("You are on your way to a raid!"))
     elif reaction.emoji == '✅':
         if user.name in here:
-            await client.send_message(discord.utils.find(
-                lambda u: u.id == user.id, client.get_all_members()),
-                    ("You already said you were at this gym."))
+            # await client.send_message(discord.utils.find(
+            #     lambda u: u.id == user.id, client.get_all_members()),
+            #         ("You already said you were at this gym."))
+            pass
         else:
             change = True
             here.append(user.name)
             if user.name in omw:
                 omw.remove(user.name)
-            await client.send_message(discord.utils.find(
-                lambda u: u.id == user.id, client.get_all_members()),
-                    ("You have arrived at a raid!"))
+            # await client.send_message(discord.utils.find(
+            #     lambda u: u.id == user.id, client.get_all_members()),
+            #         ("You have arrived at a raid!"))
     elif reaction.emoji == '❌':
         if user.name in omw:
             change = True
             omw.remove(user.name)
-            await client.send_message(discord.utils.find(
-                lambda u: u.id == user.id, client.get_all_members()),
-                    ("You are no longer on your way to this raid!"))
+            # await client.send_message(discord.utils.find(
+            #     lambda u: u.id == user.id, client.get_all_members()),
+            #         ("You are no longer on your way to this raid!"))
         elif user.name in here:
             change = True
             here.remove(user.name)
-            await client.send_message(discord.utils.find(
-                lambda u: u.id == user.id, client.get_all_members()),
-                    ("You are no longer at this raid!"))
+            # await client.send_message(discord.utils.find(
+            #     lambda u: u.id == user.id, client.get_all_members()),
+            #         ("You are no longer at this raid!"))
         else:
             await client.send_message(discord.utils.find(
                 lambda u: u.id == user.id, client.get_all_members()),
                     ("You never said you were going to this raid!"))
     else:
-        await client.send_message(discord.utils.find(
-            lambda u: u.id == user.id, client.get_all_members()),
-                ("That is an unrecogized reaction."))
+        # await client.send_message(discord.utils.find(
+        #     lambda u: u.id == user.id, client.get_all_members()),
+        #         ("That is an unrecogized reaction."))
+        pass
     if change is True:
         if len(omw) == 0 and len(here) == 0:
             await client.delete_message(msg)
