@@ -78,7 +78,7 @@ class Bot(discord.Client):
              (reaction.message.channel.is_private and
               reaction.message.author == self.user)) and
             reaction.message.embeds and user.id not in args.bot_client_ids and
-                'egg' not in reaction.message.embeds[0]['title']):
+                'egg' not in reaction.message.embeds[0]['title'].lower()):
             if reaction.message.channel.is_private is False:
                 await self.remove_reaction(
                     reaction.message, reaction.emoji, user)
@@ -92,7 +92,7 @@ class Bot(discord.Client):
         if (int(message.id) % int(len(args.tokens)) == bot_number and
             (message.channel.id in args.feed_channels or
              message.channel.id == args.active_raids_channel) and
-                message.embeds and 'egg' not in message.embeds[0]['title']):
+                message.embeds and 'egg' not in message.embeds[0]['title'].lower()):
             dicts.msgs[bot_number].append(message)
             if message.channel.id == args.active_raids_channel:
                 await asyncio.sleep(7200)
