@@ -118,8 +118,8 @@ async def rsvp(client, reaction, user, bot_number):
             found = True
             break
     if found is False:
-        descript = (reaction.message.embeds[0]['description'] + "\n\nOn " +
-                    "their way:\n```\n \n```\nAt the raid:\n```\n \n```")
+        descript = (reaction.message.embeds[0]['description'] + "\n\nInterested:\n" +
+                    "```\n \n```\nAt the raid:\n```\n \n```")
         try:
             col = reaction.message.embeds[0]['color']
         except:
