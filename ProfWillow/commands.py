@@ -648,6 +648,10 @@ async def donate(client, message):
     await client.send_message(message.channel, embed=em)
     await client.delete_message(message)
 
+async def raid(client, message):
+    pass
+
 
 def find_user(id, client):
     return discord.utils.find(lambda u: u.id == id, client.get_all_members())
+
