@@ -84,6 +84,7 @@ class Bot(discord.Client):
                     reaction.message, reaction.emoji, user)
             await rsvp(self, reaction, user, bot_number)
 
+
     async def on_message(self, message):
         bot_number = args.bot_client_ids.index(self.user.id)
         if (message.channel.id in args.feed_channels and
